@@ -3,67 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AETHERIA - 글로벌 멀티게이밍 포털 (Hardcore & Admin Core)</title>
+    <title>에테리아 - 글로벌 멀티게이밍 포털 (Hardcore & Staff Core)</title>
+    <!-- 파비콘 설정 -->
+    <link class="favicon" rel="icon" type="image/png" href="https://img.icons8.com/isometric/50/fantasy-dice.png">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;700&display=swap');
         
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background-color: #0b0f19;
+            background-color: #070a13;
             color: #e2e8f0;
         }
         .font-gaming {
             font-family: 'Orbitron', sans-serif;
         }
-        /* 고급스러운 크롬 스타일 스크롤바 */
+        /* 크롬 스타일 스크롤바 */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #0f172a;
+            background: #0b0f19;
         }
         ::-webkit-scrollbar-thumb {
-            background: #b45309;
+            background: #d97706;
             border-radius: 3px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #d97706;
+            background: #f59e0b;
         }
-        /* 장식용 글로우 효과 */
+        /* 네온 글로우 및 시각 효과 */
         .gold-glow {
-            box-shadow: 0 0 15px rgba(217, 119, 6, 0.15);
+            box-shadow: 0 0 20px rgba(217, 119, 6, 0.2);
         }
         .gold-border-glow {
-            border: 1px solid rgba(217, 119, 6, 0.3);
-            box-shadow: inset 0 0 10px rgba(217, 119, 6, 0.1);
+            border: 1px solid rgba(217, 119, 6, 0.4);
+            box-shadow: inset 0 0 15px rgba(217, 119, 6, 0.15);
+        }
+        .ad-glow {
+            box-shadow: 0 0 15px rgba(30, 41, 59, 0.8);
+            transition: all 0.3s ease;
+        }
+        .ad-glow:hover {
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+            border-color: rgba(245, 158, 11, 0.6);
+        }
+        /* 프로필 호버 펜슬 이펙트 */
+        .avatar-hover-trigger:hover .avatar-hover-overlay {
+            opacity: 1;
+        }
+        .custom-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+        }
+        .avatar-hover-trigger:hover .custom-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        /* 경고 네온 레드 사이렌 애니메이션 */
+        @keyframes siren-pulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); border-color: rgba(239, 68, 68, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.9); border-color: rgba(239, 68, 68, 0.9); }
+        }
+        .siren-glow {
+            animation: siren-pulse 1.2s infinite ease-in-out;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between overflow-x-hidden">
 
-    <!-- 토스트 알림 콘솔 -->
+    <!-- 토스트 피드백 알림 콘솔 -->
     <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <!-- 1. 헤더 (Header) -->
+    <!-- 글로벌 헤더 영역 -->
     <header class="bg-slate-950 border-b border-amber-600/40 sticky top-0 z-40 px-4 py-3 shadow-lg">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <!-- 로고 영역 -->
+            <!-- 에테리아 로고 -->
             <div class="flex items-center gap-3 cursor-pointer" onclick="changeView('home')">
                 <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center shadow-md gold-glow">
-                    <i class="fa-solid fa-dice-d20 text-slate-950 text-2xl animate-pulse"></i>
+                    <i class="fa-solid fa-dice-d20 text-slate-950 text-2xl animate-spin" style="animation-duration: 12s;"></i>
                 </div>
                 <div>
-                    <h1 class="font-gaming font-extrabold text-2xl tracking-widest bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-500 bg-clip-text text-transparent">AETHERIA</h1>
-                    <p class="text-[10px] text-amber-500/80 font-gaming uppercase tracking-widest -mt-1">Staff Core & Gamers Oasis</p>
+                    <h1 class="font-gaming font-extrabold text-2xl tracking-widest bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-500 bg-clip-text text-transparent">에테리아</h1>
+                    <p class="text-[10px] text-amber-500/80 font-gaming uppercase tracking-widest -mt-1">AETHERIA STAFF CORE</p>
                 </div>
             </div>
 
-            <!-- 최적화된 컴팩트 헤더 메뉴 (텍스트 잘림/삐져나옴 방지용 아이콘 라벨링) -->
+            <!-- 네비게이션 가이드 -->
             <nav class="flex items-center gap-1 sm:gap-2">
                 <button onclick="changeView('home')" class="p-2.5 rounded-lg text-slate-400 hover:text-amber-400 hover:bg-slate-900 transition-all flex items-center gap-2" title="홈">
                     <i class="fa-solid fa-house text-lg"></i>
@@ -74,47 +106,63 @@
                     <span class="hidden md:inline text-xs font-semibold">개설 요청</span>
                 </button>
                 
-                <!-- 부관리자 이상 (레벨 300 이상 스태프 전용) -->
-                <button id="nav-staff-btn" onclick="changeView('staff-lounge')" class="hidden p-2.5 rounded-lg text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 border border-rose-900/30 transition-all flex items-center gap-2" title="스태프 라운지">
-                    <i class="fa-solid fa-tower-broadcast text-lg"></i>
-                    <span class="hidden md:inline text-xs font-bold">스태프 라운지</span>
+                <!-- 광고 제어실 (총괄 및 개별 전담 광고주 노출 전용) -->
+                <button id="nav-ad-btn" onclick="changeView('ad-manager')" class="hidden p-2.5 rounded-lg text-emerald-400 hover:text-emerald-300 hover:bg-slate-900 transition-all flex items-center gap-2" title="광고 관리 센터">
+                    <i class="fa-solid fa-rectangle-ad text-lg animate-pulse"></i>
+                    <span class="hidden md:inline text-xs font-bold">광고 제어실</span>
                 </button>
 
-                <!-- 최고 관리자 전용 (레벨 999 전용) -->
-                <button id="nav-super-btn" onclick="changeView('super-security')" class="hidden p-2.5 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-amber-950/30 border border-amber-900/40 transition-all flex items-center gap-2" title="최고 보안 센터">
+                <!-- 게시판 전용 통제실 (완장 조건 충족 시) -->
+                <button id="nav-forum-admin-btn" onclick="openForumControlPanel()" class="hidden p-2.5 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-amber-950/30 border border-amber-500/50 transition-all flex items-center gap-2 animate-bounce" title="해당 게시판 전용 통제실">
+                    <i class="fa-solid fa-gears text-lg"></i>
+                    <span class="hidden md:inline text-xs font-extrabold">⚙️ 게시판 통제실</span>
+                </button>
+
+                <!-- 부관리자 라운지 -->
+                <button id="nav-staff-btn" onclick="changeView('staff-lounge')" class="hidden p-2.5 rounded-lg text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 border border-rose-900/30 transition-all flex items-center gap-2" title="부관리자 전용 스태프 라운지">
+                    <i class="fa-solid fa-tower-broadcast text-lg"></i>
+                    <span class="hidden md:inline text-xs font-bold">부관리자 라운지</span>
+                </button>
+
+                <!-- 최고 사령 보안 센터 -->
+                <button id="nav-super-btn" onclick="changeView('super-security')" class="hidden p-2.5 rounded-lg text-yellow-400 hover:text-yellow-300 hover:bg-amber-950/30 border border-yellow-900/40 transition-all flex items-center gap-2" title="최고 사령 보안 센터">
                     <i class="fa-solid fa-shield-halved text-lg"></i>
-                    <span class="hidden md:inline text-xs font-bold">보안 센터</span>
+                    <span class="hidden md:inline text-xs font-bold">최고 사령부</span>
                 </button>
             </nav>
 
-            <!-- 우측 계정 인증 패널 -->
             <div id="auth-panel" class="flex items-center gap-2">
-                <!-- 비로그인 게스트 -->
+                <!-- VPN 가상 우회 토글 (로그인 시 노출) -->
+                <div id="vpn-simulation-toggle" class="hidden flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer hover:border-amber-500 select-none transition-all" onclick="toggleUserVpnState()">
+                    <i id="vpn-toggle-icon" class="fa-solid fa-circle text-slate-500 text-[10px]"></i>
+                    <span id="vpn-toggle-label" class="text-slate-400">🌐 VPN 꺼짐</span>
+                </div>
+
+                <!-- 비로그인 게스트 패널 -->
                 <div id="auth-guest" class="flex items-center gap-2">
                     <button onclick="openModal('modal-login')" class="px-3 py-1.5 rounded-md text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-900 transition">로그인</button>
-                    <button onclick="openModal('modal-register')" class="px-3 py-1.5 rounded-md text-xs font-semibold bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold transition shadow-sm">가입</button>
+                    <button onclick="openModal('modal-register')" class="px-3 py-1.5 rounded-md text-xs font-semibold bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold transition shadow-sm">회원가입</button>
                 </div>
-                <!-- 로그인 계정 정보 -->
-                <div id="auth-logged" class="hidden flex items-center gap-3 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800">
-                    <div class="flex flex-col items-end">
-                        <div class="flex items-center gap-1.5">
-                            <span id="user-badge" class="text-[9px] px-1 py-0.5 rounded font-bold bg-slate-800 text-amber-500 uppercase">LV.1</span>
-                            <span id="user-display-name" class="text-xs font-bold text-slate-200">모험가</span>
+                <!-- 로그인 계정 pill -->
+                <div id="auth-logged" class="hidden flex items-center gap-3 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800 cursor-pointer hover:border-amber-500 transition-all" onclick="openMyInfoModal()">
+                    <div class="flex items-center gap-2.5">
+                        <img id="user-header-avatar" src="https://img.icons8.com/isometric/50/fantasy-dice.png" class="w-8 h-8 rounded-full border border-amber-500/50 bg-slate-950 object-cover" alt="Avatar">
+                        <div class="flex flex-col items-start leading-tight">
+                            <span id="user-display-status-name" class="text-xs font-bold text-slate-200">닉네임</span>
+                            <span id="user-display-grade-level" class="text-[10px] text-amber-500 font-bold tracking-wide">G급 모험가</span>
                         </div>
-                        <span id="user-custom-title" class="text-[10px] text-amber-400/70 font-semibold italic -mt-0.5">칭호 없음</span>
                     </div>
-                    <button onclick="openMyInfoModal()" class="text-slate-400 hover:text-amber-400 transition" title="내 정보 수정"><i class="fa-solid fa-circle-user text-xl"></i></button>
-                    <button onclick="handleLogout()" class="text-xs text-rose-400 hover:text-rose-300 font-bold transition">로그아웃</button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- 2. 장르 태그 퀵 네비게이션 -->
+    <!-- 포럼 대장 카테고리 태그 네비게이션 -->
     <section class="bg-slate-900 border-b border-slate-800/80 py-2.5 px-4">
         <div class="max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto whitespace-nowrap scrollbar-none text-xs">
-            <span class="text-amber-500 font-bold mr-2 flex items-center gap-1"><i class="fa-solid fa-fire"></i> 인기 카테고리:</span>
-            <button onclick="filterGame('ALL')" class="game-tag-btn px-3 py-1 rounded-full bg-amber-600 text-slate-950 font-bold hover:bg-amber-500 transition">전체</button>
+            <span class="text-amber-500 font-bold mr-2 flex items-center gap-1"><i class="fa-solid fa-fire"></i> 포럼 카테고리:</span>
+            <button onclick="filterGame('ALL')" class="game-tag-btn px-3 py-1 rounded-full bg-amber-600 text-slate-950 font-bold hover:bg-amber-500 transition">전체보기</button>
+            <button onclick="filterGame('NOTICE')" class="game-tag-btn px-3 py-1 rounded-full bg-red-950/80 text-red-400 border border-red-800/40 hover:bg-red-900 hover:text-white transition">📢 공식 공지</button>
             <button onclick="filterGame('MOBA')" class="game-tag-btn px-3 py-1 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 transition">League of Legends</button>
             <button onclick="filterGame('FPS')" class="game-tag-btn px-3 py-1 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Valorant</button>
             <button onclick="filterGame('RPG')" class="game-tag-btn px-3 py-1 rounded-full bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Diablo IV</button>
@@ -123,13 +171,13 @@
         </div>
     </section>
 
-    <!-- 3. 메인 레이아웃 본문 -->
+    <!-- 메인 레이아웃 본문 구역 -->
     <main id="main-content" class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 space-y-8">
 
-        <!-- [VIEW 1: HOME (게이머 스케치 본문)] -->
+        <!-- [VIEW 1: HOME (메인 홈 광장)] -->
         <div id="view-home" class="space-y-8">
             
-            <!-- 액자형 슬라이더 배너 (중앙에 위치) -->
+            <!-- 에테리아 실시간 하이라이트 배너 -->
             <section class="relative bg-slate-900 rounded-2xl border border-slate-800 p-6 shadow-2xl overflow-hidden gold-border-glow">
                 <div class="absolute -right-20 -top-20 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
                 <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-rose-500/5 rounded-full blur-3xl pointer-events-none"></div>
@@ -137,69 +185,16 @@
                 <div class="flex justify-between items-center mb-4">
                     <div class="flex items-center gap-2">
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                        <h2 class="text-sm font-gaming uppercase tracking-widest text-amber-500 font-bold">Live Highlights</h2>
+                        <h2 class="text-sm font-gaming uppercase tracking-widest text-amber-500 font-bold">에테리아 실시간 하이라이트</h2>
                     </div>
-                    <span class="text-xs text-slate-400 font-gaming" id="slider-page-indicator">1 / 4</span>
+                    <span class="text-xs text-slate-400 font-gaming" id="slider-page-indicator">0 / 0</span>
                 </div>
 
-                <!-- 실시간 부드러운 액자 슬라이드 프레임 -->
+                <!-- 하이라이트 내부 프레임 -->
                 <div class="relative min-h-[220px] sm:min-h-[300px] flex items-center justify-center overflow-hidden rounded-xl border-2 border-amber-600/20 bg-slate-950">
-                    
-                    <div id="slider-wrapper" class="w-full h-full flex transition-transform duration-700 ease-out">
-                        <!-- Slide 1 -->
-                        <div class="min-w-full p-6 flex flex-col md:flex-row items-center gap-6 justify-between shrink-0">
-                            <div class="flex-1 space-y-3">
-                                <span class="bg-red-500/20 text-red-400 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">RPG HOT 이슈</span>
-                                <h3 class="text-xl md:text-2xl font-bold text-white tracking-tight">디아블로 IV 확장팩 신규 직업 심층 분석</h3>
-                                <p class="text-sm text-slate-400 leading-relaxed max-w-md">이번 패치에서 추가된 '혼령사'의 주요 획득 빌드와 파밍 최적 루트를 알아봅니다.</p>
-                                <button onclick="triggerWriteAlert('RPG')" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2 rounded-lg shadow-md transition-all">공략 토론장 가기</button>
-                            </div>
-                            <div class="w-full md:w-1/3 h-32 md:h-44 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center overflow-hidden">
-                                <i class="fa-solid fa-fire-flame-curse text-5xl text-amber-600 animate-pulse"></i>
-                            </div>
-                        </div>
+                    <div id="slider-wrapper" class="w-full h-full flex transition-transform duration-700 ease-out"></div>
 
-                        <!-- Slide 2 -->
-                        <div class="min-w-full p-6 flex flex-col md:flex-row items-center gap-6 justify-between shrink-0">
-                            <div class="flex-1 space-y-3">
-                                <span class="bg-blue-500/20 text-blue-400 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">E-Sports</span>
-                                <h3 class="text-xl md:text-2xl font-bold text-white tracking-tight">발로란트 챔피언스 최고의 순간 TOP 5</h3>
-                                <p class="text-sm text-slate-400 leading-relaxed max-w-md">이번 시즌 글로벌 결승 무대에서 터져 나온 극적인 1vs4 클러치 리플레잉.</p>
-                                <button onclick="triggerWriteAlert('FPS')" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2 rounded-lg shadow-md transition-all">클립 공유방 가기</button>
-                            </div>
-                            <div class="w-full md:w-1/3 h-32 md:h-44 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center overflow-hidden">
-                                <i class="fa-solid fa-crosshairs text-5xl text-blue-500 animate-spin" style="animation-duration: 8s;"></i>
-                            </div>
-                        </div>
-
-                        <!-- Slide 3 -->
-                        <div class="min-w-full p-6 flex flex-col md:flex-row items-center gap-6 justify-between shrink-0">
-                            <div class="flex-1 space-y-3">
-                                <span class="bg-amber-500/20 text-amber-400 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">하드코어 통계</span>
-                                <h3 class="text-xl md:text-2xl font-bold text-white tracking-tight">수식 성장 시스템 및 칭호 한계 개편</h3>
-                                <p class="text-sm text-slate-400 leading-relaxed max-w-md">경험치 축적 공식 및 만렙 한계를 최고관리자가 전면 임의 튜닝 제어합니다.</p>
-                                <button onclick="changeView('home')" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2 rounded-lg shadow-md transition-all">시스템 안내 보기</button>
-                            </div>
-                            <div class="w-full md:w-1/3 h-32 md:h-44 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center overflow-hidden">
-                                <i class="fa-solid fa-id-card-clip text-5xl text-amber-400"></i>
-                            </div>
-                        </div>
-
-                        <!-- Slide 4 -->
-                        <div class="min-w-full p-6 flex flex-col md:flex-row items-center gap-6 justify-between shrink-0">
-                            <div class="flex-1 space-y-3">
-                                <span class="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">신규 개설 건의</span>
-                                <h3 class="text-xl md:text-2xl font-bold text-white tracking-tight">나만의 전용 게임 커뮤니티가 갖고 싶다면?</h3>
-                                <p class="text-sm text-slate-400 leading-relaxed max-w-md">누구든 익명 요청서를 접수하면 최고관리자 승인 즉시 전용 매니저 위장 임명 가능!</p>
-                                <button onclick="changeView('proposals')" class="bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs px-4 py-2 rounded-lg shadow-md transition-all">지금 요청하기</button>
-                            </div>
-                            <div class="w-full md:w-1/3 h-32 md:h-44 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center overflow-hidden">
-                                <i class="fa-solid fa-gamepad text-5xl text-emerald-400"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 좌우 이동 조작 버튼 -->
+                    <!-- 좌우 슬라이드 이동 버튼 -->
                     <button onclick="slidePrev()" class="absolute left-3 w-10 h-10 rounded-full bg-slate-950/80 hover:bg-amber-600 hover:text-slate-950 text-slate-300 border border-slate-800 flex items-center justify-center transition-all cursor-pointer">
                         <i class="fa-solid fa-chevron-left"></i>
                     </button>
@@ -209,14 +204,14 @@
                 </div>
             </section>
 
-            <!-- 3열 그리드 커뮤니티 광장 -->
+            <!-- 3열 그리드 커뮤니티 목록 -->
             <section class="space-y-4">
                 <div class="flex justify-between items-center">
                     <div>
                         <h2 class="text-lg font-bold text-slate-100 flex items-center gap-2">
-                            <i class="fa-solid fa-cubes text-amber-500"></i> 활성화된 게이머 포럼
+                            <i class="fa-solid fa-cubes text-amber-500"></i> 에테리아 활성화된 게이머 광장
                         </h2>
-                        <p class="text-xs text-slate-400">전용 로컬 완장(관리자) 수임 권한이 매칭되어 있는 정식 토론 구역입니다.</p>
+                        <p class="text-xs text-slate-400">각 게시판에 입장하면 활발한 대화와 함께 등급별 완장 권한이 행사됩니다.</p>
                     </div>
                     <button onclick="changeView('proposals')" class="text-xs text-amber-500 hover:underline"><i class="fa-solid fa-plus"></i> 새 포럼 건의</button>
                 </div>
@@ -225,21 +220,129 @@
             </section>
         </div>
 
-        <!-- [VIEW 2: PROPOSALS (익명 개설 신청서 양식)] -->
+        <!-- [VIEW: FORUM_DETAIL (통합 세부 게시판)] -->
+        <div id="view-forum-detail" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <button onclick="changeView('home')" class="text-xs text-slate-400 hover:text-amber-500 font-bold transition flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-left"></i> 광장 전체 목록으로 가기
+                </button>
+                <div class="text-right">
+                    <span id="forum-detail-genre" class="bg-amber-500/20 text-amber-400 text-[10px] px-2 py-0.5 rounded font-bold font-gaming">GENRE</span>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h2 id="forum-detail-title" class="text-2xl font-bold text-white">커뮤니티 광장</h2>
+                        <p id="forum-detail-desc" class="text-xs text-slate-400 mt-1">광장 정보 설명이 표시됩니다.</p>
+                    </div>
+                    <!-- 전담 완장 정보 -->
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-[11px] text-right">
+                        <div class="text-slate-400">👑 광장 전담 관리자: <span id="forum-manager-display" class="font-bold text-amber-400">미지정</span></div>
+                        <div class="text-[10px] text-slate-500 mt-0.5">※ 해당 완장 권한자만 우측 상단 ⚙️게시판 통제실이 개방됩니다.</div>
+                    </div>
+                </div>
+
+                <!-- 게시글 작성 서판 -->
+                <div id="board-write-area" class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3 relative">
+                    <h3 id="write-panel-title" class="text-xs font-bold text-amber-500 flex items-center gap-1"><i class="fa-solid fa-pen-nib"></i> 새로운 모험 기록(글쓰기)</h3>
+                    <div id="write-inputs-wrapper" class="space-y-3">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <input type="text" id="post-title" placeholder="글 제목 (최소 2자 이상)" class="w-full md:col-span-2 bg-slate-900 border border-slate-800 rounded p-2 text-xs text-white focus:outline-none focus:border-amber-500">
+                            <button id="post-submit-btn" onclick="submitNewPost()" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs py-2 rounded transition">
+                                에테리아 서판 등록 (+70 XP)
+                            </button>
+                        </div>
+                        <textarea id="post-content" rows="3" placeholder="모험담을 이곳에 전개해 보세요." class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-xs text-white focus:outline-none focus:border-amber-500"></textarea>
+                        
+                        <!-- 공지 전용 하이라이트 노출 지정 체크박스 -->
+                        <div id="highlight-checkbox-area" class="hidden flex items-center gap-2 mt-1">
+                            <input type="checkbox" id="post-to-highlight" class="w-4 h-4 rounded bg-slate-900 border-slate-800 text-amber-500 focus:ring-0 cursor-pointer">
+                            <label for="post-to-highlight" class="text-xs text-red-400 font-bold cursor-pointer select-none">
+                                <i class="fa-solid fa-circle-exclamation mr-1 animate-pulse"></i> 실시간 하이라이트 배너에 이 공지사항 등록하기
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 등록된 게시글 대장 목록 -->
+                <div class="space-y-4">
+                    <h3 class="text-sm font-bold text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-list-ul text-amber-500"></i> 등록된 게시글 대장
+                    </h3>
+                    <div id="board-posts-list" class="space-y-4 divide-y divide-slate-800/60"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- [VIEW: FORUM_ADMIN_CONTROL (게시판 전용 통제실)] -->
+        <div id="view-forum-admin-control" class="hidden space-y-6 max-w-4xl mx-auto">
+            <div class="bg-gradient-to-r from-amber-950/40 via-slate-900 to-amber-950/40 border border-amber-500/30 rounded-2xl p-6 space-y-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-lg bg-amber-600/20 flex items-center justify-center border border-amber-500">
+                            <i class="fa-solid fa-gears text-2xl text-amber-400"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold text-white"><span id="forum-admin-active-name" class="text-amber-400">게시판</span> 전용 통제실</h2>
+                            <p class="text-xs text-slate-400">본 포럼 전담 완장(게시판 관리자) 전용 치안 구역입니다.</p>
+                        </div>
+                    </div>
+                    <button onclick="backToForumDetail()" class="bg-slate-800 hover:bg-slate-750 text-slate-300 text-xs px-3 py-1.5 rounded-lg border border-slate-700 transition">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> 게시판으로 돌아가기
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl space-y-4">
+                        <h3 class="text-xs font-bold text-amber-500 uppercase tracking-widest flex items-center gap-1.5">
+                            <i class="fa-solid fa-user-plus text-amber-400"></i> 게시판 부관리자 위임부
+                        </h3>
+                        <p class="text-[11px] text-slate-400">* 게시판 관리자는 일반 모험가 중 한 명을 본 게시판의 부관리자(`forum_deputy`)로 임명할 권리가 있습니다.</p>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-[11px] text-slate-400 mb-1">임명 대상 모험가</label>
+                                <select id="forum-deputy-target-user" class="w-full bg-slate-900 border border-slate-800 text-xs rounded p-2.5 text-slate-200 focus:outline-none"></select>
+                            </div>
+                            <button onclick="appointForumDeputy()" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs py-2 rounded transition">
+                                게시판 부관리자 임명 집행
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl space-y-4">
+                        <h3 class="text-xs font-bold text-rose-400 uppercase tracking-widest flex items-center gap-1.5">
+                            <i class="fa-solid fa-triangle-exclamation text-rose-500"></i> 본 게시판 현재 완장 인원 현황
+                        </h3>
+                        <div class="divide-y divide-slate-900 text-xs space-y-2">
+                            <div class="pt-2 flex justify-between">
+                                <span class="text-slate-400">게시판 관리자 (나)</span>
+                                <span id="local-admin-display" class="font-bold text-amber-400">-</span>
+                            </div>
+                            <div class="pt-2 flex justify-between">
+                                <span class="text-slate-400">임명된 전용 부관리자들</span>
+                                <span id="local-deputy-list-display" class="font-bold text-teal-400">없음</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- [VIEW 2: PROPOSALS (건의안 양식)] -->
         <div id="view-proposals" class="hidden max-w-2xl mx-auto space-y-6">
             <div class="bg-slate-900 rounded-xl border border-slate-800 p-6 space-y-4">
                 <div class="text-center space-y-2">
-                    <i class="fa-solid fa-envelope-open-text text-4xl text-amber-500"></i>
+                    <i class="fa-solid fa-envelope-open-text text-4xl text-amber-500 animate-pulse"></i>
                     <h2 class="text-xl font-bold text-white">익명 신규 커뮤니티 개설 신청서</h2>
-                    <p class="text-xs text-slate-400">자신의 선호 게임 포럼이 없다면 익명으로 접수하십시오. 최고관리자의 승인 즉시 건설됩니다.</p>
+                    <p class="text-xs text-slate-400">나만의 포럼을 요청하면 최고관리자가 심사하여 정식 개방합니다.</p>
                 </div>
-
                 <hr class="border-slate-800">
-
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-xs font-bold text-amber-500 uppercase mb-1">희망하는 포럼 명칭</label>
-                        <input type="text" id="req-comm-name" placeholder="예: 리그 오브 레전드 모바일 포럼" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-sm focus:outline-none focus:border-amber-500 text-white">
+                        <label class="block text-xs font-bold text-amber-500 uppercase mb-1">희망 포럼 명칭</label>
+                        <input type="text" id="req-comm-name" placeholder="예: 디아블로4 아시아 하드코어 원정대" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-sm focus:outline-none focus:border-amber-500 text-white">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-amber-500 uppercase mb-1">카테고리 장르</label>
@@ -252,29 +355,169 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-amber-500 uppercase mb-1">개설 건의 배경 및 상세 목적 (완벽 익명 보장)</label>
-                        <textarea id="req-comm-desc" rows="4" placeholder="누가 신청했는지 로그가 절대 남지 않습니다. 자유롭고 명료하게 기재하십시오." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-sm focus:outline-none text-white"></textarea>
+                        <label class="block text-xs font-bold text-amber-500 uppercase mb-1">건의 상세 목적</label>
+                        <textarea id="req-comm-desc" rows="4" placeholder="익명이 보증되니 자유롭게 적어주세요." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-sm focus:outline-none text-white"></textarea>
                     </div>
                     <button onclick="submitCommunityProposal()" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold py-3 rounded-lg text-sm transition shadow-lg">익명으로 포럼 승인 신청하기</button>
                 </div>
             </div>
         </div>
 
-        <!-- [VIEW 3: STAFF LOUNGE (운영진 협동 통제실)] -->
+        <!-- [VIEW: AD_MANAGER (광고 제어실)] -->
+        <div id="view-ad-manager" class="hidden space-y-6">
+            <div class="bg-gradient-to-r from-emerald-950/40 via-slate-900 to-emerald-950/40 border border-emerald-500/30 rounded-2xl p-6 space-y-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-lg bg-emerald-600/20 flex items-center justify-center border border-emerald-500">
+                        <i class="fa-solid fa-rectangle-ad text-2xl text-emerald-400"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-white">에테리아 광고 관리 센터 (Ad Operating Center)</h2>
+                        <p class="text-xs text-emerald-400">최고관리자, 총광고관리자 및 각 슬롯의 지정 광고관리자만 변경 제어 가능합니다.</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-950 border border-slate-800 p-3.5 rounded-lg flex flex-col md:flex-row justify-between items-start md:items-center text-xs gap-2">
+                    <div>
+                        <span class="text-slate-400">현재 인증된 광고 계정:</span>
+                        <span id="ad-login-status" class="font-bold text-amber-400 ml-1">게스트</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 bg-slate-900/80 border border-slate-800 rounded-xl p-5 space-y-4">
+                        <h3 class="text-sm font-bold text-amber-500 uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-sliders"></i> 슬롯 광고 업로드 및 텍스트 커스텀</h3>
+                        
+                        <div class="space-y-4 bg-slate-950 p-4 rounded-xl border border-slate-900">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 mb-1.5">통제할 대상 배너 지정</label>
+                                <select id="ad-select-slot" onchange="loadAdSlotSettings()" class="w-full bg-slate-900 border border-slate-800 rounded p-2.5 text-xs text-amber-400 font-bold focus:outline-none">
+                                    <option value="1">1번 광고 배너 (300x250) - [담당: 1광고관리자]</option>
+                                    <option value="2">2번 광고 배너 (300x250) - [담당: 2광고관리자]</option>
+                                    <option value="3">3번 광고 배너 (300x250) - [담당: 3광고관리자]</option>
+                                    <option value="4">4번 광고 배너 (300x250) - [담당: 4광고관리자]</option>
+                                    <option value="5">5번 광고 배너 (300x250) - [담당: 5광고관리자]</option>
+                                </select>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-400 mb-1">배너 출력 텍스트</label>
+                                    <input type="text" id="ad-text-input" class="w-full bg-slate-900 border border-slate-800 rounded p-2.5 text-xs text-white focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-400 mb-1">광고 클릭 시 이동할 링크 URL</label>
+                                    <input type="text" id="ad-link-input" class="w-full bg-slate-900 border border-slate-800 rounded p-2.5 text-xs text-white focus:outline-none">
+                                </div>
+                            </div>
+
+                            <!-- 광고 전용 고화질 이미지 실시간 업로드 모듈 -->
+                            <div class="p-3.5 bg-slate-900 rounded-xl border border-slate-800 space-y-3">
+                                <label class="block text-xs font-bold text-emerald-400"><i class="fa-solid fa-file-image mr-1"></i> 전용 광고 배너 이미지 실시간 적용</label>
+                                <div class="flex items-center gap-3">
+                                    <button onclick="document.getElementById('ad-image-file-input').click()" class="bg-slate-800 hover:bg-slate-750 border border-slate-700 text-xs px-3.5 py-2 rounded-lg font-bold text-slate-200 transition">
+                                        기기에서 이미지 찾기
+                                    </button>
+                                    <button onclick="removeAdUploadedImage()" class="bg-rose-950/40 hover:bg-rose-900 text-rose-400 hover:text-white border border-rose-900/40 text-xs px-3.5 py-2 rounded-lg font-bold transition">
+                                        이미지 제거 (배경 복구)
+                                    </button>
+                                    <input type="file" id="ad-image-file-input" accept="image/*" class="hidden" onchange="previewAdImageUpload()">
+                                </div>
+                                <div id="ad-image-preview-area" class="hidden border border-slate-800 rounded-lg p-2 bg-slate-950 text-[10px] text-slate-400 flex items-center gap-2">
+                                    <i class="fa-solid fa-check text-emerald-400"></i> 이미지 가적재 완료 (1MB 제한 규격 적합)
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 mb-1">배경용 컬러풀 그라데이션 스타일 지정 (이미지 미사용 시 작동)</label>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                                    <button onclick="selectAdGradient('from-amber-600 to-yellow-500')" class="gradient-choice-btn p-2 rounded bg-gradient-to-r from-amber-600 to-yellow-500 text-slate-950 font-bold border-2 border-transparent">앰버 테일</button>
+                                    <button onclick="selectAdGradient('from-rose-600 to-red-500')" class="gradient-choice-btn p-2 rounded bg-gradient-to-r from-rose-600 to-red-500 text-white font-bold border-2 border-transparent">크림슨 파이어</button>
+                                    <button onclick="selectAdGradient('from-blue-600 to-indigo-700')" class="gradient-choice-btn p-2 rounded bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-bold border-2 border-transparent">오션 미드나잇</button>
+                                    <button onclick="selectAdGradient('from-emerald-600 to-teal-500')" class="gradient-choice-btn p-2 rounded bg-gradient-to-r from-emerald-600 to-teal-500 text-slate-950 font-bold border-2 border-transparent">네온 엘프</button>
+                                </div>
+                                <input type="hidden" id="ad-gradient-hidden" value="from-amber-600 to-yellow-500">
+                            </div>
+                        </div>
+
+                        <button onclick="saveAdSlotSettings()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-extrabold py-3 rounded-lg text-xs transition shadow-md flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i> 지정 광고 배너 행정 명령 발포 및 적용
+                        </button>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div id="ad-appoint-card" class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
+                            <h3 class="text-xs font-bold text-emerald-400 uppercase tracking-widest flex items-center gap-1.5">
+                                <i class="fa-solid fa-user-tag text-emerald-500"></i> 🔱 광고관리자 지정 임명 위원회
+                            </h3>
+                            <p class="text-[11px] text-slate-400">* <strong>총광고관리자</strong>는 일반 유저를 1~5번 광고 슬롯 전담 담당자로 임명 가능합니다.</p>
+                            
+                            <div class="space-y-3 bg-slate-950 p-3 rounded-lg border border-slate-900">
+                                <div>
+                                    <label class="block text-[10px] text-slate-400 mb-1">대상 지정</label>
+                                    <select id="ad-appoint-user" class="w-full bg-slate-900 border border-slate-800 text-xs rounded p-2 text-slate-300 focus:outline-none"></select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-slate-400 mb-1">배정할 광고 슬롯</label>
+                                    <select id="ad-appoint-target-slot" class="w-full bg-slate-900 border border-slate-800 text-xs rounded p-2 text-slate-300 focus:outline-none">
+                                        <option value="1">1번 광고 전담 (ad_admin_1)</option>
+                                        <option value="2">2번 광고 전담 (ad_admin_2)</option>
+                                        <option value="3">3번 광고 전담 (ad_admin_3)</option>
+                                        <option value="4">4번 광고 전담 (ad_admin_4)</option>
+                                        <option value="5">5번 광고 전담 (ad_admin_5)</option>
+                                    </select>
+                                </div>
+                                <button onclick="handleAppointAdAdmin()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs py-2 rounded transition">
+                                    광고 완장 임명 칙서 발동
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3.5">
+                            <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-list-check"></i> 광고 전담 대리인 지정 현황</h3>
+                            <div id="ad-admins-status-list" class="divide-y divide-slate-800 text-xs"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- [VIEW 3: STAFF LOUNGE (부관리자 라운지)] -->
         <div id="view-staff-lounge" class="hidden space-y-6">
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3 bg-rose-950/20 p-4 border border-rose-900/40 rounded-xl">
                 <i class="fa-solid fa-user-shield text-3xl text-rose-500"></i>
                 <div>
-                    <h2 class="text-xl font-bold text-white">에테리아 운영진 전용 라운지</h2>
-                    <p class="text-xs text-rose-400">유저 처벌, 임시 메모 공유 및 커스텀 칭호 강제 수여 조치를 집행합니다.</p>
+                    <h2 class="text-xl font-bold text-white">에테리아 부관리자 라운지</h2>
+                    <p class="text-xs text-rose-400">부관리자는 특정 광장 관리자를 선발하거나 글로벌 유저를 제재할 수 있습니다.</p>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- 좌측 2열: 유저 처벌 대장 -->
                 <div class="lg:col-span-2 space-y-6">
-                    <div class="bg-slate-900 border border-rose-950/40 rounded-xl p-5 space-y-4">
-                        <h3 class="text-sm font-bold text-amber-500 uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-gavel"></i> 전체 서버 실시간 유저 처벌 테이블</h3>
+                    <div class="bg-slate-900 border border-rose-900/50 rounded-xl p-5 space-y-4">
+                        <h3 class="text-sm font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-user-gear"></i> 👑 각 광장 전용 게시판 관리자 임명부
+                        </h3>
+                        <p class="text-xs text-slate-400">부관리자는 모험가에게 특정 게시판 수임 권한을 수여합니다.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <div>
+                                <label class="block text-[11px] text-slate-400 mb-1">진급할 대상</label>
+                                <select id="deputy-target-user-appoint" class="w-full bg-slate-900 border border-slate-800 text-xs rounded p-2 text-slate-200 focus:outline-none"></select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-slate-400 mb-1">위임할 관할 게시판</label>
+                                <select id="deputy-target-forum-appoint" class="w-full bg-slate-900 border border-slate-800 text-xs rounded p-2 text-slate-200 focus:outline-none"></select>
+                            </div>
+                            <div class="flex items-end">
+                                <button onclick="appointForumAdminByDeputy()" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs py-2 rounded transition">
+                                    지정 관리자 임명 인가
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
+                        <h3 class="text-sm font-bold text-amber-500 uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-gavel"></i> 글로벌 모험가 치안 행정 법정</h3>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left text-xs border-collapse">
                                 <thead>
@@ -290,24 +533,23 @@
                             </table>
                         </div>
                     </div>
-
-                    <!-- 칭호 부여 센터 -->
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
-                        <h3 class="text-sm font-bold text-amber-500 uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-award"></i> 🏆 명예의 전당 (커스텀 칭호 수여처)</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                            <select id="title-target-user" class="bg-slate-950 border border-slate-800 text-xs rounded p-2 focus:outline-none text-slate-300"></select>
-                            <input type="text" id="custom-title-input" placeholder="칭호 입력 (예: 버그 슬레이어)" class="bg-slate-950 border border-slate-800 text-xs rounded p-2 focus:outline-none text-white">
-                            <button onclick="awardCustomTitle()" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs rounded py-2 transition">수여 명령 인가</button>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- 우측 1열: 스태프 전용 소통창 -->
+                <!-- 부관리자 소통 및 VPN 적발 경보소 -->
                 <div class="space-y-6">
+                    <!-- 스태프 전용 실시간 가상 VPN 적발 경보소 -->
+                    <div class="bg-slate-900 border border-red-900/50 rounded-xl p-5 space-y-3.5 siren-glow">
+                        <h3 class="text-xs font-bold text-red-400 uppercase tracking-wider flex items-center gap-1.5">
+                            <i class="fa-solid fa-triangle-exclamation text-red-500 text-sm"></i> 🚨 실시간 VPN 적발 경보 통제소
+                        </h3>
+                        <p class="text-[10px] text-slate-400">보안 우회 패킷 유저 적발 대장입니다. 완장은 즉각 조치 가능합니다.</p>
+                        <div id="staff-vpn-alerts-container" class="space-y-2.5 max-h-[220px] overflow-y-auto"></div>
+                    </div>
+
                     <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">
                         <h3 class="text-sm font-bold text-rose-400 uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-note-sticky"></i> 스태프 긴급 인수인계 메모</h3>
                         <div class="space-y-2">
-                            <textarea id="staff-memo-input" rows="3" placeholder="서버 이상 및 유저 이슈 사항 기록." class="w-full bg-slate-950 border border-slate-800 text-xs rounded-lg p-2.5 focus:outline-none text-white"></textarea>
+                            <textarea id="staff-memo-input" rows="3" placeholder="메모할 보안 이슈 기재." class="w-full bg-slate-950 border border-slate-800 text-xs rounded-lg p-2.5 focus:outline-none text-white"></textarea>
                             <button onclick="postStaffMemo()" class="w-full bg-rose-700 hover:bg-rose-600 text-white font-bold text-xs py-2 rounded-lg transition">메모 등록</button>
                         </div>
                         <hr class="border-slate-800 my-2">
@@ -317,45 +559,104 @@
             </div>
         </div>
 
-        <!-- [VIEW 4: SUPER SECURITY (최고관리자 전 전용 보안실)] -->
+        <!-- [VIEW: SUPER SECURITY (최고 사령 보안 센터)] -->
         <div id="view-super-security" class="hidden space-y-6">
             <div class="flex items-center gap-3">
-                <i class="fa-solid fa-fingerprint text-3xl text-amber-500"></i>
+                <i class="fa-solid fa-fingerprint text-3xl text-amber-500 animate-pulse"></i>
                 <div>
-                    <h2 class="text-xl font-bold text-white font-gaming uppercase tracking-wider">AETHERIA SECURITY CORE (레벨 999 최고권한실)</h2>
-                    <p class="text-xs text-amber-500/80">경험치 밸런스 튜닝, 익명 커뮤니티 심사 개설, VPN 차단 방화벽 모니터링을 관할합니다.</p>
+                    <h2 class="text-xl font-bold text-white font-gaming uppercase tracking-wider">AETHERIA SECURITY CORE (최고 사령 보안실)</h2>
+                    <p class="text-xs text-amber-500/80">최고관리자는 글로벌 임명, 국가 차단, 방화벽 감사 튜닝 권한을 가집니다.</p>
+                </div>
+            </div>
+
+            <!-- 최고 사령관 전용 전 탭 게이트웨이 실행 패널 -->
+            <div class="bg-gradient-to-r from-yellow-600/30 via-slate-900 to-yellow-600/30 border-2 border-yellow-500 rounded-2xl p-6 space-y-3 shadow-xl">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <h3 class="text-sm font-bold text-yellow-400 flex items-center gap-1.5"><i class="fa-solid fa-compass text-yellow-500"></i> 최고 사령부 행정 사슬 게이트웨이</h3>
+                        <p class="text-xs text-slate-300 mt-1">포털의 모든 핵심 관리 통제실(광고, 스태프, 보안, 개별 포럼)로 즉각 진입할 수 있는 중앙 전용 이동창을 개방합니다.</p>
+                    </div>
+                    <button onclick="openModal('modal-gateway')" class="bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-slate-950 font-extrabold text-xs px-5 py-3 rounded-xl transition shadow-lg flex items-center gap-1.5">
+                        <i class="fa-solid fa-door-open"></i> 사령부 권한 게이트웨이 실행
+                    </button>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- 좌측 2열: 밸런스 튜닝 및 익명 심사 -->
                 <div class="lg:col-span-2 space-y-6">
-                    
-                    <!-- 최고관리자 레벨/만렙/배율 통제 패널 -->
+                    <div class="bg-slate-900 border border-yellow-500/30 rounded-xl p-5 space-y-4 shadow-xl">
+                        <h3 class="text-sm font-bold text-yellow-400 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-user-shield"></i> 🎯 최고 사령부 전격 권한 임명부
+                        </h3>
+                        <p class="text-xs text-slate-400">부관리자, 특정 광장 수임자, 총광고관리자 임명이 가능합니다.</p>
+                        
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block text-[11px] text-slate-400 mb-1">임명 대상</label>
+                                    <select id="super-appoint-target-user" class="w-full bg-slate-900 border border-slate-800 text-xs rounded p-2 text-slate-200 focus:outline-none"></select>
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] text-slate-400 mb-1">관리 직책 수여</label>
+                                    <select id="super-appoint-role" onchange="toggleSuperForumSelector()" class="w-full bg-slate-900 border border-slate-800 text-xs rounded p-2 text-slate-200 focus:outline-none">
+                                        <option value="deputy">에테리아 부관리자 (Staff Core)</option>
+                                        <option value="forum_admin">특정 광장 게시판 관리자 (Forum Admin)</option>
+                                        <option value="ad_manager">에테리아 총광고관리자 (Ad Head)</option>
+                                    </select>
+                                </div>
+                                <div id="super-forum-select-area" class="hidden">
+                                    <label class="block text-[11px] text-slate-400 mb-1">관할 게시판 지정</label>
+                                    <select id="super-appoint-target-forum" class="w-full bg-slate-900 border border-slate-800 text-xs rounded p-2 text-slate-200 focus:outline-none"></select>
+                                </div>
+                            </div>
+                            <button onclick="handleAppointBySuperAdmin()" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs py-2.5 rounded transition">
+                                최고 사령 권한 인가 명령 집행
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 border border-red-500/30 rounded-xl p-5 space-y-4">
+                        <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-user-minus"></i> 🛑 광고진들 강제 행정 해임 위원회
+                        </h3>
+                        <p class="text-xs text-slate-400">최고관리자는 총광고관리자 및 각 슬롯 전담 담당자의 직위를 박탈 해제할 수 있습니다.</p>
+                        
+                        <div class="overflow-x-auto bg-slate-950 rounded-xl border border-slate-800">
+                            <table class="w-full text-left text-xs border-collapse">
+                                <thead>
+                                    <tr class="border-b border-slate-900 text-slate-400">
+                                        <th class="p-3">UID</th>
+                                        <th>현재 직무</th>
+                                        <th>슬롯</th>
+                                        <th class="text-right p-3">해임 조치</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="super-ad-revoke-list" class="divide-y divide-slate-900"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 경험치 계수 밸런싱 통제소 -->
                     <div class="bg-slate-900 border border-amber-500/30 rounded-xl p-5 space-y-4 gold-glow">
                         <h3 class="text-sm font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
-                            <i class="fa-solid fa-sliders"></i> ⚙️ 글로벌 유저 만렙 상한선 및 경험치 곡선 계수 튜닝
+                            <i class="fa-solid fa-sliders"></i> ⚙️ 글로벌 만렙 상한 및 경험치 밸런스 난이도 튜닝
                         </h3>
-                        <p class="text-xs text-slate-400">포털의 레벨별 성장 필요 경험치를 기하급수 공식 <code class="bg-black px-1.5 py-0.5 rounded text-amber-400 font-mono">Math.pow(Lv, 1.5) * 배율</code>에 대입하여 실시간 튜닝합니다.</p>
-                        
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-950 p-4 rounded-xl border border-slate-800">
                             <div>
-                                <label class="block text-[11px] font-bold text-slate-400 mb-1">일반 게이머 최대 성한선 (Max Level)</label>
+                                <label class="block text-[11px] font-bold text-slate-400 mb-1">일반 게이머 만렙 제한 (Max Level)</label>
                                 <input type="number" id="config-max-level" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-xs text-amber-400 font-bold" min="1" max="999">
-                                <p class="text-[9px] text-slate-500 mt-1">이 레벨에 도달하면 XP 축적이 중지되고 '만렙' 가드가 작동합니다.</p>
                             </div>
                             <div>
                                 <label class="block text-[11px] font-bold text-slate-400 mb-1">요구 경험치 난이도 지수 (XP Multiplier)</label>
                                 <input type="number" id="config-xp-multiplier" class="w-full bg-slate-900 border border-slate-800 rounded p-2 text-xs text-amber-400 font-bold" min="10" max="5000">
-                                <p class="text-[9px] text-slate-500 mt-1">상향할수록 다음 레벨에 필요한 요구치가 가혹하게 폭증합니다.</p>
                             </div>
                         </div>
-                        <button onclick="updateSystemConfig()" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-extrabold text-xs py-2.5 rounded-lg transition shadow-md">
-                            <i class="fa-solid fa-floppy-disk"></i> 글로벌 밸런싱 수정 헌장 선포
+                        <button onclick="updateSystemConfig()" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-extrabold text-xs py-2.5 rounded-lg transition">
+                            글로벌 밸런싱 수정 헌장 선포
                         </button>
                     </div>
 
-                    <!-- 대기 안건: 접수된 익명 커뮤니티 건의록 -->
+                    <!-- 대기 안건 익명 포럼 심사부 -->
                     <div class="bg-slate-900 border border-amber-950/50 rounded-xl p-5 space-y-4">
                         <div class="flex justify-between items-center">
                             <h3 class="text-sm font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-list-check"></i> 📂 접수 대기 중인 익명 포럼 개설 승인부</h3>
@@ -363,74 +664,59 @@
                         </div>
                         <div id="super-proposal-list" class="divide-y divide-slate-800 space-y-4 max-h-[350px] overflow-y-auto pr-2"></div>
                     </div>
-
-                    <!-- 행정 진급 임명 위원회 -->
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
-                        <h3 class="text-sm font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-user-gear"></i> 스태프 및 운영 위원 임명부</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                            <select id="appoint-target-user" class="bg-slate-950 border border-slate-800 text-xs rounded p-2 text-slate-300"></select>
-                            <select id="appoint-role" class="bg-slate-950 border border-slate-800 text-xs rounded p-2 text-slate-300">
-                                <option value="user">일반 모험가</option>
-                                <option value="admin">관리자 (LV.300 스태프)</option>
-                                <option value="deputy">부관리자 (LV.500 스태프)</option>
-                            </select>
-                            <button onclick="handleAppointRole()" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs rounded py-2 transition">행정 명령 집행</button>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- 우측 1열: 방화벽 감시 터미널 및 가상 패킷 시뮬레이터 -->
                 <div class="space-y-6">
+                    <!-- 최고 사령부 VPN 적발 경보소 -->
+                    <div class="bg-slate-900 border border-red-900/50 rounded-xl p-5 space-y-3.5 siren-glow">
+                        <h3 class="text-xs font-bold text-red-400 uppercase tracking-wider flex items-center gap-1.5">
+                            <i class="fa-solid fa-shield-halved text-red-500 text-sm"></i> 🚨 실시간 VPN 적발 경보 통제소
+                        </h3>
+                        <p class="text-[10px] text-slate-400">가상 우회 보안 침투 적발 명부입니다.</p>
+                        <div id="super-vpn-alerts-container" class="space-y-2.5 max-h-[220px] overflow-y-auto"></div>
+                    </div>
+
+                    <!-- 국가 트래픽 통제 수신 위젯 -->
                     <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
-                        <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-network-wired"></i> 트래픽 제어 및 VPN 디펜서</h3>
+                        <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-network-wired"></i> 트래픽 제어 및 Geo-Blocking 방화벽</h3>
+                        
                         <div class="flex justify-between items-center bg-slate-950 p-3 rounded-lg border border-slate-800">
-                            <div>
-                                <span class="text-xs font-bold text-slate-200">AI 가상 우회망(VPN) 즉시 감지</span>
-                            </div>
+                            <div><span class="text-xs font-bold text-slate-200">AI 가상 우회망(VPN) 즉시 감지</span></div>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" id="vpn-switch" checked class="sr-only peer">
                                 <div class="w-9 h-5 bg-slate-800 rounded-full peer peer-checked:bg-amber-500 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-slate-400 after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
                             </label>
                         </div>
 
-                        <!-- 국가 차단 스위칭 -->
+                        <!-- 국가 차단 스위치 리포트 -->
                         <div class="space-y-2">
-                            <span class="text-xs font-bold text-slate-400">국가 트래픽 수신(Geo-Blocking) 통제</span>
-                            <div class="grid grid-cols-2 gap-2 text-xs">
-                                <div class="bg-slate-950 p-2.5 rounded-lg flex justify-between items-center border border-slate-800">
-                                    <span>🇰🇷 대한민국</span><span class="text-emerald-400 font-bold">통과됨</span>
-                                </div>
-                                <button onclick="toggleCountryBlock('CN')" id="block-btn-CN" class="bg-slate-950 p-2.5 rounded-lg flex justify-between items-center border border-slate-800 text-left hover:border-red-500">
-                                    <span>🇨🇳 중국</span><span id="block-txt-CN" class="text-emerald-400 font-bold">허용</span>
-                                </button>
-                                <button onclick="toggleCountryBlock('RU')" id="block-btn-RU" class="bg-rose-950/20 p-2.5 rounded-lg flex justify-between items-center border border-rose-900/60 text-left hover:border-red-500">
-                                    <span>🇷🇺 러시아</span><span id="block-txt-RU" class="text-rose-500 font-bold">차단</span>
-                                </button>
-                                <button onclick="toggleCountryBlock('US')" id="block-btn-US" class="bg-slate-950 p-2.5 rounded-lg flex justify-between items-center border border-slate-800 text-left hover:border-red-500">
-                                    <span>🇺🇸 미국</span><span id="block-txt-US" class="text-emerald-400 font-bold">허용</span>
-                                </button>
-                            </div>
+                            <span class="text-xs font-bold text-slate-400">국가 트래픽 수신 통제 (8개국 정밀 제어)</span>
+                            <div id="country-block-grid" class="grid grid-cols-2 gap-2 text-xs"></div>
                         </div>
 
-                        <!-- 모의 가상 패킷 발송기 -->
+                        <!-- 가상 패킷 모의 발송 테스트기 -->
                         <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 space-y-2.5">
-                            <span class="text-xs font-bold text-amber-500 flex items-center gap-1"><i class="fa-solid fa-gamepad"></i> 테스트 패킷 발송 (경험치 획득 연동)</span>
+                            <span class="text-xs font-bold text-amber-500 flex items-center gap-1"><i class="fa-solid fa-gamepad"></i> 테스트 패킷 발송 (경험치 연동)</span>
                             <div class="grid grid-cols-2 gap-2 text-xs">
                                 <select id="sim-country" class="bg-slate-900 text-slate-200 p-1.5 rounded">
                                     <option value="KR">출발: 대한민국 🇰🇷</option>
                                     <option value="CN">출발: 중국 🇨🇳</option>
                                     <option value="RU">출발: 러시아 🇷🇺</option>
                                     <option value="US">출발: 미국 🇺🇸</option>
+                                    <option value="IN">출발: 인도 🇮🇳</option>
+                                    <option value="VN">출발: 베트남 🇻🇳</option>
+                                    <option value="JP">출발: 일본 🇯🇵</option>
+                                    <option value="GB">출발: 영국 🇬🇧</option>
                                 </select>
                                 <select id="sim-vpn" class="bg-slate-900 text-slate-200 p-1.5 rounded">
                                     <option value="normal">일반 접속망</option>
                                     <option value="vpn">VPN 우회망</option>
                                 </select>
                             </div>
-                            <button onclick="simulateTraffic()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs py-1.5 rounded transition">패킷 수신 테스트 실행</button>
+                            <button onclick="simulateTraffic()" class="w-full bg-slate-800 hover:bg-slate-750 text-slate-200 font-bold text-xs py-1.5 rounded transition">패킷 수신 테스트 실행</button>
                         </div>
 
-                        <!-- 방화벽 실시간 로그 모니터 터미널 -->
+                        <!-- 방화벽 로그 터미널 -->
                         <div class="space-y-1.5">
                             <div id="traffic-log-terminal" class="bg-black/90 p-2.5 rounded-lg h-24 overflow-y-auto text-[9px] font-mono text-emerald-400 space-y-1">
                                 <div>[SECURITY-CORE] Aetheria Core Firewall engine is online.</div>
@@ -442,20 +728,37 @@
         </div>
     </main>
 
-    <!-- 4. 푸터 (Footer) -->
+    <!-- 한 줄에 딱 맞춘 300x250 광고 배너 전용 섹션 -->
+    <section class="bg-slate-950 border-t border-b border-amber-600/20 py-8 px-4">
+        <div class="max-w-7xl mx-auto space-y-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <span class="bg-amber-500/15 text-amber-500 text-[10px] px-2 py-0.5 rounded font-bold border border-amber-500/20">PARTNERS</span>
+                    <h3 class="text-xs font-gaming font-bold uppercase tracking-wider text-slate-400">에테리아 공식 광고제휴 가로 배너 (300x250)</h3>
+                </div>
+                <button id="footer-ad-manage-shortcut" onclick="changeView('ad-manager')" class="hidden text-[10px] text-emerald-400 hover:underline flex items-center gap-1">
+                    <i class="fa-solid fa-pencil"></i> 광고 관리 편집하러 가기
+                </button>
+            </div>
+
+            <!-- 한 줄(데스크톱 5개) 딱 맞춰서 배열되는 300x250 규격 광고 배너 그리드 -->
+            <div id="ad-grid-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 justify-center items-center overflow-x-auto pb-2"></div>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
     <footer class="bg-slate-950 border-t border-slate-900 py-6 px-4">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="text-center md:text-left space-y-1 text-xs text-slate-500">
-                <p class="font-gaming font-bold text-slate-400">AETHERIA OPERATING HUB</p>
+                <p class="font-gaming font-bold text-slate-400">에테리아 멀티게이밍 포털 (AETHERIA OPERATING HUB)</p>
                 <p>충청북도 충주시 번영대로 | 대표 스태프 마스터 연합</p>
-                <p>문의처: contact@aetheriagaming.net</p>
+                <p>제휴 문의처: contact@aetheriagaming.net</p>
                 <p class="text-[10px] text-slate-600">© 2026 AETHERIA Cooperative. All Rights Reserved.</p>
             </div>
-            <!-- 모의 광고 배너 -->
             <div class="w-full md:w-auto">
                 <div class="bg-slate-900 border border-slate-800 rounded-lg p-3 flex items-center justify-between gap-4 max-w-sm mx-auto">
-                    <p class="text-[10px] text-slate-400"><span class="bg-amber-500/20 text-amber-500 px-1 py-0.5 rounded font-bold mr-1">AD</span> 기계식 게이밍 키보드 기획 40% 반값 특가전</p>
-                    <a href="#" onclick="toast('스폰서십 외부 숍 연결 상태를 시뮬레이션합니다.', 'info'); return false;" class="bg-amber-600 text-slate-950 font-extrabold text-[10px] px-2.5 py-1 rounded transition">확인</a>
+                    <p class="text-[10px] text-slate-400"><span class="bg-amber-500/20 text-amber-500 px-1 py-0.5 rounded font-bold mr-1">AD</span> 에테리아 제휴 게이밍 헤드셋 패키지 30% 특가전</p>
+                    <a href="#" onclick="toast('스폰서숍 외부 랜딩 페이지로 연결을 테스트합니다.', 'info'); return false;" class="bg-amber-600 text-slate-950 font-extrabold text-[10px] px-2.5 py-1 rounded transition">확인</a>
                 </div>
             </div>
         </div>
@@ -463,30 +766,55 @@
 
     <!-- ================= MODALS ================= -->
 
-    <!-- 프로필 세부 카드 모달 -->
+    <!-- [MODAL: MY INFO (마이페이지 및 프로필 통합)] -->
     <div id="modal-myinfo" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm p-6 space-y-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm p-6 space-y-4 shadow-2xl relative">
             <div class="flex justify-between items-center">
-                <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-address-card text-amber-500"></i> 모험가 상세 카드</h3>
-                <button onclick="closeModal('modal-myinfo')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-address-card text-amber-500"></i> 마이페이지 및 프로필 카드
+                </h3>
+                <button onclick="closeMyInfoModalAttempt()" class="text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- 파일 업로드 호버 연필 및 1MB 제한 가이드 툴팁 -->
+            <div class="flex flex-col items-center justify-center space-y-2 py-1">
+                <div class="relative w-24 h-24 rounded-full border-2 border-amber-500/50 p-1 bg-slate-950 cursor-pointer avatar-hover-trigger flex items-center justify-center group" onclick="document.getElementById('myinfo-avatar-file-input').click()">
+                    <img id="myinfo-avatar-preview" src="https://img.icons8.com/isometric/50/fantasy-dice.png" class="w-full h-full rounded-full object-cover transition duration-300" alt="Avatar">
+                    
+                    <div class="absolute inset-0 bg-black/60 rounded-full flex items-center justify-center opacity-0 avatar-hover-overlay transition-opacity duration-300">
+                        <i class="fa-solid fa-pencil text-white text-xl animate-bounce"></i>
+                    </div>
+
+                    <!-- 5,000명 동시성 1MB 한도 툴팁 -->
+                    <div class="absolute bottom-[-45px] z-50 bg-slate-950 border border-amber-500 text-white text-[9px] px-2.5 py-1.5 rounded shadow-xl text-center leading-relaxed w-52 custom-tooltip font-sans pointer-events-none">
+                        <p class="font-bold text-amber-400"><i class="fa-solid fa-cloud-arrow-up mr-1"></i> 최대 1MB 이하만 권장</p>
+                        <p class="text-slate-400 mt-0.5">5,000명 동시 활동 트래픽 병목 최적화 규격</p>
+                    </div>
+                </div>
+                
+                <input type="file" id="myinfo-avatar-file-input" accept="image/*" class="hidden" onchange="previewMyInfoAvatarFile()">
+                <p class="text-[9px] text-slate-500">※ 이미지를 탭하여 1MB 이하의 프로필 사진을 업로드하세요.</p>
+            </div>
+
+            <!-- 닉네임 필드 -->
+            <div class="space-y-1">
+                <label class="block text-xs font-bold text-slate-400">대외 활동명 (닉네임) 변경</label>
+                <input type="text" id="myinfo-nickname-input" class="w-full bg-slate-950 border border-slate-800 text-xs rounded-lg p-2.5 focus:outline-none focus:border-amber-500 text-white">
             </div>
             
-            <div class="space-y-3 bg-slate-950 p-4 rounded-xl border border-slate-800">
+            <div class="space-y-3 bg-slate-950 p-3.5 rounded-xl border border-slate-800">
                 <div class="flex justify-between items-center text-xs">
-                    <span class="text-slate-400">계정 고유명 (ID):</span>
+                    <span class="text-slate-400">계정 고유 ID:</span>
                     <span id="info-id" class="font-mono text-slate-300">-</span>
                 </div>
                 <div class="flex justify-between items-center text-xs">
-                    <span class="text-slate-400">모험 칭호 등급선:</span>
-                    <span id="info-tier-badge" class="font-bold text-amber-400">-</span>
-                </div>
-                <div class="flex justify-between items-center text-xs">
-                    <span class="text-slate-400">특수 위임 칭호:</span>
-                    <span id="info-custom-title" class="font-semibold text-teal-400 italic">없음</span>
+                    <span class="text-slate-400">에테리아 직무/역할:</span>
+                    <span id="info-role-badge" class="font-bold text-amber-400">-</span>
                 </div>
                 
-                <!-- 경험치 게이지 -->
-                <div class="space-y-1.5 pt-2">
+                <div class="space-y-1.5 pt-1.5">
                     <div class="flex justify-between text-[11px]">
                         <span class="text-slate-400">하드코어 통제 XP</span>
                         <span id="info-xp-text" class="text-amber-500 font-bold">0 / 0 XP</span>
@@ -498,51 +826,179 @@
                 </div>
             </div>
 
-            <div class="space-y-2">
-                <label class="block text-xs font-bold text-slate-400">활동 대외 닉네임 변경</label>
-                <input type="text" id="info-nick-input" class="w-full bg-slate-950 border border-slate-800 text-sm rounded-lg p-2.5 focus:outline-none focus:border-amber-500 text-white">
-                <button onclick="handleUpdateNickname()" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold py-2 rounded-lg text-xs transition">수정사항 반영</button>
+            <!-- 마이페이지 3버튼 탭레이아웃 -->
+            <div class="flex gap-2 pt-2 text-xs font-bold">
+                <button onclick="handleLogout()" class="flex-1 py-2.5 rounded-xl border border-rose-900/60 text-rose-400 hover:text-white hover:bg-rose-950 transition-all flex items-center justify-center gap-1">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i> 로그아웃
+                </button>
+                <button onclick="handleMyPageSaveBtn()" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-slate-950 font-extrabold shadow-lg transition-all flex items-center justify-center gap-1 gold-glow">
+                    <i class="fa-solid fa-floppy-disk"></i> 저장하기
+                </button>
+                <button onclick="closeMyInfoModalAttempt()" class="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-750 border border-slate-700 text-slate-300 transition-all flex items-center justify-center gap-1">
+                    <i class="fa-solid fa-circle-xmark"></i> 닫기
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- 모의 인증 로그인 -->
-    <div id="modal-login" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm p-6 space-y-4">
-            <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-arrow-right-to-bracket text-amber-500"></i> 에테리아 연결 로그인</h3>
+    <!-- [MODAL: UNSAVED WARNING (미저장 방지 스마트 경고)] -->
+    <div id="modal-unsaved-warning" class="fixed inset-0 bg-black/90 backdrop-blur-md hidden z-[60] flex items-center justify-center p-4">
+        <div class="bg-slate-950 border border-amber-500/50 rounded-2xl w-full max-w-sm p-6 space-y-4 shadow-2xl text-center">
+            <div class="mx-auto w-12 h-12 rounded-full bg-amber-500/10 flex items-center justify-center border border-amber-500/30 mb-2">
+                <i class="fa-solid fa-triangle-exclamation text-amber-500 text-xl animate-bounce"></i>
+            </div>
+            <h4 class="text-sm font-bold text-white tracking-tight">수정 사항 미저장 경고</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+                프로필 변경 사항이 아직 저장되지 않았습니다.<br>수정 내용을 적용하고 나가시겠습니까?
+            </p>
+            <div class="flex gap-3 pt-2 font-bold text-xs">
+                <button onclick="handleDiscardAndGoHome()" class="flex-1 py-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-all">
+                    저장하지 않고 닫기
+                </button>
+                <button onclick="handleSaveAndGoHome()" class="flex-1 py-2 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-slate-950 font-extrabold shadow-lg transition-all">
+                    저장하고 나가기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- [MODAL: GATEWAY (최고 사령부 게이트웨이 이동창)] -->
+    <div id="modal-gateway" class="fixed inset-0 bg-black/90 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-900 border-2 border-yellow-500/60 rounded-2xl w-full max-w-md p-6 space-y-5 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-base font-bold text-yellow-400 flex items-center gap-2">
+                    <i class="fa-solid fa-compass text-lg"></i> 최고 사령관 전용 게이트웨이 포털
+                </h3>
+                <button onclick="closeModal('modal-gateway')" class="text-slate-400 hover:text-white transition"><i class="fa-solid fa-xmark"></i></button>
+            </div>
             
-            <div class="bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-400 space-y-1">
-                <p class="font-bold text-amber-500"><i class="fa-solid fa-circle-info"></i> 모의 로그인 전용 계정 규칙:</p>
-                <p>• 최고관리자 ID: <strong class="text-slate-200">admin</strong> (비밀번호 무관)</p>
-                <p>• 부관리자 ID: <strong class="text-slate-200">sub_admin</strong> (비밀번호 무관)</p>
-                <p>• 신규 가입 유저: 우측 상단 가입을 통해서 자유롭게 인가</p>
+            <p class="text-xs text-slate-400 leading-relaxed">최고 권한을 우회 활성화하여 포털 내 인가된 주요 부서 관리실로 직접 이동할 수 있습니다.</p>
+            
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="gatewayNavigate('home')" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-amber-500 p-3.5 rounded-xl text-left text-xs space-y-1 transition-all">
+                    <p class="font-bold text-white"><i class="fa-solid fa-house mr-1.5 text-amber-500"></i> 메인 홈 광장</p>
+                    <p class="text-[10px] text-slate-500">일반 포럼 커뮤니티</p>
+                </button>
+                <button onclick="gatewayNavigate('ad-manager')" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-emerald-500 p-3.5 rounded-xl text-left text-xs space-y-1 transition-all">
+                    <p class="font-bold text-white"><i class="fa-solid fa-rectangle-ad mr-1.5 text-emerald-400"></i> 광고 제어실</p>
+                    <p class="text-[10px] text-slate-500">300x250 배너 관리</p>
+                </button>
+                <button onclick="gatewayNavigate('staff-lounge')" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-rose-500 p-3.5 rounded-xl text-left text-xs space-y-1 transition-all">
+                    <p class="font-bold text-white"><i class="fa-solid fa-user-shield mr-1.5 text-rose-400"></i> 부관리자 라운지</p>
+                    <p class="text-[10px] text-slate-500">완장 및 치안 통제실</p>
+                </button>
+                <button onclick="gatewayNavigate('super-security')" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-yellow-500 p-3.5 rounded-xl text-left text-xs space-y-1 transition-all">
+                    <p class="font-bold text-white"><i class="fa-solid fa-shield-halved mr-1.5 text-yellow-400"></i> 최고 사령부</p>
+                    <p class="text-[10px] text-slate-500">보안 및 국가 IP 방화벽</p>
+                </button>
             </div>
+            
+            <button onclick="closeModal('modal-gateway')" class="w-full py-2 bg-slate-800 hover:bg-slate-750 text-xs font-bold text-slate-300 rounded-lg transition">
+                사령실로 복귀
+            </button>
+        </div>
+    </div>
 
-            <div class="space-y-2">
-                <input type="text" id="login-username" placeholder="모험가 아이디 (Username)" class="w-full bg-slate-950 border border-slate-800 text-sm rounded-lg p-2.5 focus:outline-none text-white">
-                <button onclick="handleLogin()" class="w-full bg-amber-600 text-slate-950 font-bold py-2 rounded text-sm transition">연결 검증</button>
+    <!-- [MODAL: REALTIME SIREN ALERT (실시간 가상 VPN 적발 팝업)] -->
+    <div id="modal-vpn-alarm" class="fixed bottom-5 left-5 bg-red-950 border-2 border-red-500 rounded-xl p-4 w-full max-w-sm shadow-2xl z-50 hidden siren-glow">
+        <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-full bg-red-900/40 flex items-center justify-center text-red-500">
+                <i class="fa-solid fa-triangle-exclamation animate-pulse"></i>
+            </div>
+            <div class="flex-1 space-y-1.5">
+                <h4 class="text-xs font-gaming font-black text-red-400 uppercase tracking-widest flex justify-between items-center">
+                    <span>SECURITY INTRUSION DETECTED</span>
+                    <button onclick="closeModal('modal-vpn-alarm')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                </h4>
+                <p id="vpn-alarm-text" class="text-xs text-white leading-relaxed font-semibold">
+                    [알림: VPN 사용자가 적발 되었습니다.]
+                </p>
+                <div class="flex justify-end gap-1.5 text-[10px]">
+                    <button onclick="closeModal('modal-vpn-alarm'); changeView('staff-lounge')" class="bg-red-600 hover:bg-red-500 text-white font-bold px-2.5 py-1 rounded">
+                        통제실 확인
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- 가입 모달 -->
-    <div id="modal-register" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm p-6 space-y-4">
+    <!-- [MODAL: LOGIN (로그인)] -->
+    <div id="modal-login" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 space-y-4">
             <div class="flex justify-between items-center">
-                <h3 class="text-lg font-bold text-white">신규 모험가 등록</h3>
+                <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-arrow-right-to-bracket text-amber-500"></i> 에테리아 동기화</h3>
+                <button onclick="closeModal('modal-login')" class="text-slate-400 hover:text-white transition"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="bg-slate-950 border border-slate-800 rounded-lg p-3 text-[11px] text-slate-400 space-y-1 font-mono">
+                <p class="font-bold text-amber-500 mb-1"><i class="fa-solid fa-circle-info"></i> 에테리아 모의 접속 규칙 (비밀번호 = ID와 일치):</p>
+                <p>• admin (최고지휘관) / sub_admin (부관리자)</p>
+                <p>• ad_manager (총광고) / lol_manager (롤 완장)</p>
+            </div>
+
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">ID</label>
+                    <input type="text" id="login-username" placeholder="ID 기입" class="w-full bg-slate-950 border border-slate-800 text-sm rounded-lg p-2.5 focus:outline-none focus:border-amber-500 text-white font-mono">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">비밀번호</label>
+                    <input type="password" id="login-password" placeholder="비밀번호 기입" class="w-full bg-slate-950 border border-slate-800 text-sm rounded-lg p-2.5 focus:outline-none focus:border-amber-500 text-white font-mono">
+                </div>
+                <button onclick="handleLogin()" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 font-extrabold py-2.5 rounded-lg text-xs transition">
+                    에테리아 연결
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- [MODAL: REGISTER (회원가입)] -->
+    <div id="modal-register" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-user-plus text-amber-500"></i> 신규 등록부</h3>
                 <button onclick="closeModal('modal-register')" class="text-slate-400 hover:text-white transition">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
-            <div class="space-y-3">
-                <input type="text" id="reg-username" placeholder="희망 접속 ID" class="w-full bg-slate-950 border border-slate-800 text-xs p-2.5 rounded text-white">
-                <input type="text" id="reg-nickname" placeholder="게임 광장 활동명(닉네임)" class="w-full bg-slate-950 border border-slate-800 text-xs p-2.5 rounded text-white">
-                <button onclick="handleRegister()" class="w-full bg-amber-600 text-slate-950 text-xs font-bold py-2 rounded transition">등록 완료</button>
+
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-400 mb-1">희망 아이디 (필수)</label>
+                    <input type="text" id="reg-username" oninput="validateUsernameRealtime()" placeholder="3~20자 영문/숫자 조합" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded-lg text-white font-mono focus:outline-none">
+                    <div id="reg-username-feedback" class="text-[10px] mt-1 text-slate-500"></div>
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1">비밀번호 (최소 8자, 특수기호 1개, 숫자 1개 이상 필수)</label>
+                    <input type="password" id="reg-password" oninput="validatePasswordRealtime()" placeholder="패스워드 입력" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded-lg text-white font-mono focus:outline-none">
+                    <div id="reg-password-feedback" class="text-[10px] mt-1 text-slate-500"></div>
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1">닉네임</label>
+                    <input type="text" id="reg-nickname" placeholder="에테리아에서 보여질 별칭" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded-lg text-white focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1">테스트용 시작 레벨 설정 (1 ~ 999)</label>
+                    <input type="number" id="reg-level" value="1" min="1" max="999" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded-lg text-amber-500 font-bold focus:outline-none">
+                </div>
+                
+                <div class="bg-slate-950 p-2.5 rounded border border-slate-800">
+                    <div class="flex items-start gap-1 text-[10px] text-slate-400">
+                        <input type="checkbox" id="reg-agree-terms" class="mt-0.5">
+                        <label for="reg-agree-terms" class="cursor-pointer select-none">
+                            [필수] 에테리아 커뮤니티 수칙 준수 서약서에 동의합니다.
+                        </label>
+                    </div>
+                </div>
+
+                <button onclick="handleRegister()" class="w-full bg-amber-600 hover:bg-amber-500 text-slate-950 text-xs font-bold py-3 rounded-lg transition shadow-lg">
+                    신규 유저 등록 완료
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- 글쓰기 권한 모달 (CTA 지원) -->
+    <!-- CTA 서판 등록 알림 -->
     <div id="modal-cta-alert" class="fixed inset-0 bg-black/85 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
         <div class="bg-slate-900 border border-amber-600/50 rounded-2xl w-full max-w-sm p-6 text-center">
             <p class="text-sm text-white mb-4">에테리아 광장에 모험 기록을 적기 위해선 서판 등록(계정 생성)이 필수적입니다.</p>
@@ -562,99 +1018,193 @@
             currentSlide: 0,
             totalSlides: 4,
             
-            // 글로벌 난이도 및 밸런스 설정 체계
+            // 실시간 가상 VPN 상태 플래그
+            userVpnActive: false,
+
+            // 시스템 밸런싱
             config: {
-                maxLevel: 99,       // 최고 관리자가 수정할 만렙 제한 기본값
-                xpMultiplier: 350   // 가혹 경험치 곡선 계수
+                maxLevel: 999,
+                xpMultiplier: 350
+            },
+
+            // 가로형 300x250 광고 기본 탑재 구조
+            adSlots: {
+                1: { text: "⚔️ 최고 존엄 RPG 신작 대개편! 접속 즉시 50회 뽑기 제공", link: "#", gradient: "from-amber-600 to-yellow-500", image: "https://placehold.co/300x250/111827/f59e0b?text=SPONSOR+AD+01", currentAdmin: "ad_admin1" },
+                2: { text: "🎧 에테리아 특선 게이밍 무선 헤드셋 반값 기획전", link: "#", gradient: "from-rose-600 to-red-500", image: null, currentAdmin: "ad_admin2" },
+                3: { text: "🎮 2026 신규 스팀 인디게임 어워드 마스터팩 정식 출시", link: "#", gradient: "from-blue-600 to-indigo-700", image: null, currentAdmin: "ad_admin3" },
+                4: { text: "🧩 최강의 브레인 스피릿 대난투 카드게임 대리점 패키지", link: "#", gradient: "from-emerald-600 to-teal-500", image: null, currentAdmin: "ad_admin4" },
+                5: { text: "💻 고성능 그래픽카드 초특가전 - 주간 한정 수량 완비", link: "#", gradient: "from-purple-600 to-pink-500", image: null, currentAdmin: "ad_admin5" }
             },
             
+            // 가상 유저 DB (비밀번호 SHA-256 저장)
             users: [
-                { username: 'admin', nickname: '최고대마스터', role: 'superadmin', level: 999, xp: 0, customTitle: '보안 사령관', warnings: 0, status: '정상' },
-                { username: 'sub_admin', nickname: '부기장스타', role: 'deputy', level: 500, xp: 0, customTitle: '라운지 지킴이', warnings: 0, status: '정상' },
-                { username: 'gamer_pro', nickname: '정직한전사', role: 'user', level: 45, xp: 120, customTitle: '', warnings: 0, status: '정상' },
-                { username: 'troll_king', nickname: '광장트래커', role: 'user', level: 14, xp: 50, customTitle: '', warnings: 2, status: '채팅금지' }
+                { username: 'admin', passwordHash: '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', nickname: '최고대마스터', role: 'superadmin', level: 999, xp: 0, warnings: 0, status: '정상', phone: '010-0000-0000', isVerified: true, avatar: 'https://img.icons8.com/isometric/50/shield.png' },
+                { username: 'sub_admin', passwordHash: 'f3b47b4d1b8c6e2b69f8c6fb9bf9b59654167e8cd8b88d3ca3ec5df44ff23cf0', nickname: '부기장스타', role: 'deputy', level: 500, xp: 0, warnings: 0, status: '정상', phone: '010-1111-1111', isVerified: true, avatar: 'https://img.icons8.com/isometric/50/fantasy-dice.png' },
+                { username: 'ad_manager', passwordHash: 'a7ea3ef34a047da34da68f5c355be326e9903e40994f87a329ef32e0bc27546a', nickname: '총광고관리자', role: 'ad_manager', level: 300, xp: 0, warnings: 0, status: '정상', phone: '010-2222-2222', isVerified: true, avatar: 'https://img.icons8.com/isometric/50/megaphone.png' },
+                
+                // 개별 광고 전담진
+                { username: 'ad_admin1', passwordHash: '81c4e2079031f0cf2f392f4c4ee5e1d4be22b5df01dfc1db6a2a0ff9981423bc', nickname: '1광고관리자', role: 'ad_admin_1', level: 201, xp: 0, warnings: 0, status: '정상', phone: '010-3333-3333', isVerified: true, avatar: 'https://img.icons8.com/isometric/50/coins.png' },
+                { username: 'ad_admin2', passwordHash: '071a9e88bf0a41d06ff3fc5f8e658992ba7381be9f9ecbe9fc023a1043343516', nickname: '2광고관리자', role: 'ad_admin_2', level: 202, xp: 0, warnings: 0, status: '정상', phone: '010-4444-4444', isVerified: true, avatar: 'https://img.icons8.com/isometric/50/coins.png' },
+                { username: 'ad_admin3', passwordHash: 'a4b8686a63fa9723df7a69bc7b2b735222ef563810166d1f03f392fa942c76e2', nickname: '3광고관리자', role: 'ad_admin_3', level: 203, xp: 0, warnings: 0, status: '정상', phone: '010-5555-5555', isVerified: true, avatar: 'https://img.icons8.com/isometric/50/coins.png' },
+                { username: 'ad_admin4', passwordHash: '98d02c8148b598b04a081ec4a02be04618a8b139b4b0eb1a74d2b3b0dfbbf255', nickname: '4광고관리자', role: 'ad_admin_4', level: 204, xp: 0, warnings: 0, status: '정상', phone: '010-6666-6666', isVerified: true, avatar: 'https://img.icons8.com/isometric/50/coins.png' },
+                { username: 'ad_admin5', passwordHash: 'a6be461f6d338f0c97b8332b4b45561a337a7f433cb8df7f0535e5b326075908', nickname: '5광고관리자', role: 'ad_admin_5', level: 205, xp: 0, warnings: 0, status: '정상', phone: '010-7777-7777', isVerified: true, avatar: 'https://img.icons8.com/isometric/50/coins.png' },
+                
+                // 각 게시판 전용 완장 샘플
+                { username: 'lol_manager', passwordHash: 'c4e9766943806fb4db38f8cfecff165445209353982e5ee4b5a343a492cb1fcf', nickname: '협곡정령', role: 'forum_admin', level: 85, xp: 10, warnings: 0, status: '정상', managedForumId: 1, phone: '010-8888-8888', isVerified: true, avatar: 'https://img.icons8.com/isometric/50/crown.png' },
+                { username: 'val_manager', passwordHash: '5e0e02c6114a053c82eb5c207909ebdfb4482bc2cfca0fa087ef678d4610b64d', nickname: '조준장인', role: 'forum_admin', level: 95, xp: 120, warnings: 0, status: '정상', managedForumId: 2, phone: '010-9999-9999', isVerified: true, avatar: 'https://img.icons8.com/isometric/50/crosshairs.png' }
             ],
-            proposals: [
-                { id: 101, title: "이터널 리턴 신규 서브컬처 팬아트 판 개설", genre: "ANIME", requester: "익명 게이머", desc: "고퀄리티 팬아트를 자랑할 낙원이 필요해요." }
-            ],
+
+            // 포럼 광장 리스트
             communities: [
-                { id: 1, name: "리그 오브 레전드 전략 공략소", genre: "MOBA", desc: "협곡 메타 분석 구역", manager: "sub_admin" },
-                { id: 2, name: "발로란트 실전 전술 훈련소", genre: "FPS", desc: "실력 상승을 위한 에임 트레이닝과 가이드 교환실", manager: "troll_king" }
+                { id: 999, name: "📢 에테리아 공식 공지서판", genre: "NOTICE", desc: "최고 운영진이 전하는 패치 내역 및 안내", manager: "admin" },
+                { id: 1, name: "리그 오브 레전드 전략 공략소", genre: "MOBA", desc: "협곡 실시간 공략 가이드", manager: "lol_manager" },
+                { id: 2, name: "발로란트 실전 전술 훈련소", genre: "FPS", desc: "조준선 및 포지션 정보 제공", manager: "val_manager" },
+                { id: 3, name: "디아블로 IV 혼령사 연구실", genre: "RPG", desc: "하드코어 최고의 시너지 연구", manager: "gamer_pro" }
             ],
+
+            // 게시글 대장 (조회수 views 및 다중 댓글 입증을 위한 기본 댓글 DB 구조화)
+            posts: [
+                { id: 1001, forumId: 999, title: "에테리아 3.0 등급 및 보안 경보실 대개편", content: "최고관리자-부관리자-게시판 완장 연동 체인 및 가상 VPN 실시간 사이렌 경보실이 정식 배포되었습니다.", author: "최고대마스터", likes: 5, views: 450, isAnnouncement: true, showInHighlight: true, isVpn: false, comments: [] },
+                { 
+                    id: 1, 
+                    forumId: 1, 
+                    title: "S급 마스터 추천 협곡 OP 픽 공략", 
+                    content: "이번 메타에서는 서포터 룰루와 잔나의 시너지가 기하급수적으로 잘 통합니다. (모의 VPN 테스트용 글)", 
+                    author: "협곡정령", 
+                    likes: 15, 
+                    views: 320, 
+                    isAnnouncement: false, 
+                    showInHighlight: false, 
+                    isVpn: true, 
+                    comments: [
+                        { author: "조준장인 (A급 모험가)", text: "룰루 진짜 개사기인듯 인정합니다", isVpn: false },
+                        { author: "부기장스타 (S급 모험가)", text: "잔나도 로밍력이 너무 좋아졌어요", isVpn: false }
+                    ] 
+                },
+                { 
+                    id: 2, 
+                    forumId: 2, 
+                    title: "발로란트 벤달 vs 팬텀 종결 분석표", 
+                    content: "원거리 헤드 원탭을 노린다면 무조건 벤달이지만, 연막 속 스프레이와 기습용으로는 여전히 팬텀이 우월합니다.", 
+                    author: "조준장인", 
+                    likes: 8, 
+                    views: 512, 
+                    isAnnouncement: false, 
+                    showInHighlight: false, 
+                    isVpn: false, 
+                    comments: [
+                        { author: "협곡정령 (A급 모험가)", text: "전 팬텀 스프레이가 손에 맞더라구요", isVpn: false }
+                    ] 
+                },
+                { 
+                    id: 3, 
+                    forumId: 3, 
+                    title: "혼령사 깃털 빌드 세팅 가이드라인 (하드코어)", 
+                    content: "하드코어 생존을 보장하기 위해 깃털 고유 메커니즘과 방어도 세팅은 최소 1000 이상 맞추고 진입해야 안전합니다.", 
+                    author: "최고대마스터", 
+                    likes: 24, 
+                    views: 180, 
+                    isAnnouncement: false, 
+                    showInHighlight: false, 
+                    isVpn: false, 
+                    comments: [] 
+                }
+            ],
+
+            proposals: [
+                { id: 101, title: "이터널 리턴 신규 팬아트 판 개설", genre: "ANIME", requester: "익명 게이머", desc: "팬아트를 공유할 수 있는 자리가 있으면 좋겠습니다." }
+            ],
+
             staffMemos: [
-                { id: 1, author: '최고대마스터', text: '경험치 계수 가혹도가 상향 설정되었습니다. 신입 유저 성장을 집중 관측하세요.' }
+                { id: 1, author: '최고대마스터', text: '부관리자는 임명회담 탭을 사용해 임의의 유저를 게시판 관리자로 지정할 수 있습니다.' }
             ],
-            blockRules: { CN: false, RU: true, US: false }
+
+            // 국가 수신 차단 규칙 (KR 포함 8개국 완벽 연동)
+            blockRules: { KR: false, CN: false, RU: true, US: false, IN: false, VN: false, JP: false, GB: false },
+            
+            // 실시간 보안 경보 적발 로그 리스트
+            securityAlerts: [],
+
+            activeForumId: null, 
+            tempAvatarBase64: null,
+            tempAdImageBase64: null
         };
 
-        window.onload = function() {
-            // 인풋 설정 기본값 세팅
-            document.getElementById('config-max-level').value = state.config.maxLevel;
-            document.getElementById('config-xp-multiplier').value = state.config.xpMultiplier;
-            
-            renderCommunityCards();
-            renderUserSanctionsTable();
-            renderAdminProposals();
-            renderStaffMemos();
-            populateUserDropdowns();
-            
-            // 슬라이더 무한 루프
-            setInterval(() => { slideNext(); }, 6000);
-        }
-
-        // 하드코어 고유 기하급수적 필요 경험치 산출 함수 (Math.pow 활용)
-        function getRequiredXP(level) {
-            return Math.floor(Math.pow(level, 1.5) * state.config.xpMultiplier);
-        }
-
-        // 최고관리자 환경설정 갱신 인가
-        function updateSystemConfig() {
-            const maxLvl = parseInt(document.getElementById('config-max-level').value);
-            const xpMult = parseInt(document.getElementById('config-xp-multiplier').value);
-            
-            if (isNaN(maxLvl) || maxLvl < 1 || isNaN(xpMult) || xpMult < 10) {
-                toast('입력값 범위 규격 에러입니다.', 'error');
-                return;
+        // 완벽 호환 순수 JS Fallback 암호화 (Iframe/비보안 로컬 환경 대응)
+        function sha256_fallback(ascii) {
+            function rightRotate(value, amount) {
+                return (value >>> amount) | (value << (32 - amount));
             }
-
-            state.config.maxLevel = maxLvl;
-            state.config.xpMultiplier = xpMult;
-            
-            toast(`⚙️ 행정 칙령 선포: 만렙 상한 [${maxLvl}Lv] / 경험치 배율 난이도 [${xpMult}] 반영 완료!`, 'system');
-            logTraffic(`[CONFIG-CHANGED] MaxLevel=${maxLvl}, XPMultiplier=${xpMult}`);
-            
-            if (state.user && state.user.level >= state.config.maxLevel) {
-                state.user.xp = 0;
-            }
-            updateHeaderAndProfileUI();
-        }
-
-        // 하드코어 경험치 적립 및 성장 가드
-        function gainXP(amount) {
-            if (!state.user) return;
-            
-            if (state.user.level >= state.config.maxLevel) {
-                state.user.xp = 0;
-                return;
-            }
-            
-            state.user.xp += amount;
-            let required = getRequiredXP(state.user.level);
-            
-            while (state.user.xp >= required) {
-                if (state.user.level >= state.config.maxLevel) {
-                    state.user.xp = 0;
-                    break;
+            var mathPow = Math.pow;
+            var maxWord = mathPow(2, 32);
+            var lengthProperty = 'length';
+            var i, j;
+            var result = '';
+            var words = [];
+            var asciiLength = ascii[lengthProperty] * 8;
+            var hash = sha256_fallback.h = sha256_fallback.h || [];
+            var k = sha256_fallback.k = sha256_fallback.k || [];
+            var primeCounter = k[lengthProperty];
+            var isComposite = {};
+            for (var candidate = 2; primeCounter < 64; candidate++) {
+                if (!isComposite[candidate]) {
+                    for (i = 0; i < 313; i += candidate) {
+                        isComposite[i] = candidate;
+                    }
+                    hash[primeCounter] = (mathPow(candidate, .5) * maxWord) | 0;
+                    k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
                 }
-                state.user.xp -= required;
-                state.user.level += 1;
-                toast(`🎉 LEVEL UP! 하드코어 고지를 넘었습니다. [${state.user.level} 레벨] 달성!`, 'success');
-                required = getRequiredXP(state.user.level);
             }
-            updateHeaderAndProfileUI();
+            ascii += '\x80';
+            while (ascii[lengthProperty] % 64 - 56) ascii += '\x00';
+            for (i = 0; i < ascii[lengthProperty]; i++) {
+                j = ascii.charCodeAt(i);
+                if (j >> 8) return;
+                words[i >> 2] |= j << (24 - (i % 4) * 8);
+            }
+            words[words[lengthProperty]] = ((asciiLength / maxWord) | 0);
+            words[words[lengthProperty]] = (asciiLength | 0);
+            var h0 = hash[0], h1 = hash[1], h2 = hash[2], h3 = hash[3], h4 = hash[4], h5 = hash[5], h6 = hash[6], h7 = hash[7];
+            for (j = 0; j < words[lengthProperty]; j += 16) {
+                var w = words.slice(j, j + 16);
+                var oldH0 = h0, oldH1 = h1, oldH2 = h2, oldH3 = h3, oldH4 = h4, oldH5 = h5, oldH6 = h6, oldH7 = h7;
+                for (i = 0; i < 64; i++) {
+                    var w16 = w[i - 16], w15 = w[i - 15], w7 = w[i - 7], w2 = w[i - 2];
+                    var s0 = rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3);
+                    var s1 = rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10);
+                    w[i] = i < 16 ? w[i] : (w[i - 16] + s0 + w[i - 7] + s1) | 0;
+                    var t1 = (h7 + (rightRotate(h4, 6) ^ rightRotate(h4, 11) ^ rightRotate(h4, 25)) + ((h4 & h5) ^ (~h4 & h6)) + k[i] + (w[i] || 0)) | 0;
+                    var t2 = ((rightRotate(h0, 2) ^ rightRotate(h0, 13) ^ rightRotate(h0, 22)) + ((h0 & h1) ^ (h0 & h2) ^ (h1 & h2))) | 0;
+                    h7 = h6; h6 = h5; h5 = h4; h4 = (h3 + t1) | 0; h3 = h2; h2 = h1; h1 = h0; h0 = (t1 + t2) | 0;
+                }
+                h0 = (h0 + oldH0) | 0; h1 = (h1 + oldH1) | 0; h2 = (h2 + oldH2) | 0; h3 = (h3 + oldH3) | 0;
+                h4 = (h4 + oldH4) | 0; h5 = (h5 + oldH5) | 0; h6 = (h6 + oldH6) | 0; h7 = (h7 + oldH7) | 0;
+            }
+            var resultArr = [h0, h1, h2, h3, h4, h5, h6, h7];
+            for (i = 0; i < 8; i++) {
+                var hex = (resultArr[i] >>> 0).toString(16);
+                while (hex.length < 8) hex = '0' + hex;
+                result += hex;
+            }
+            return result;
         }
 
-        // 토스트 인앱 경고 출력기
+        // 보안 컨텍스트 여부를 탐지하는 하이브리드 SHA-256 해시 래퍼 함수
+        async function sha256(message) {
+            if (window.crypto && window.crypto.subtle) {
+                try {
+                    const msgBuffer = new TextEncoder().encode(message);
+                    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+                } catch (e) {
+                    // Iframe sandbox 제약 등으로 실패 시 JS 폴백 작동
+                }
+            }
+            return sha256_fallback(message);
+        }
+
+        // 토스트 출력기
         function toast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -670,118 +1220,985 @@
             setTimeout(() => { toast.classList.add('translate-x-20', 'opacity-0'); setTimeout(() => { toast.remove(); }, 400); }, 3500);
         }
 
-        // 스위칭 뷰
-        function changeView(viewId) {
-            document.getElementById('view-home').classList.add('hidden');
-            document.getElementById('view-proposals').classList.add('hidden');
-            document.getElementById('view-staff-lounge').classList.add('hidden');
-            document.getElementById('view-super-security').classList.add('hidden');
+        // VPN 상태 토글 제어
+        function toggleUserVpnState() {
+            if (!state.user) {
+                toast('VPN 가상 시뮬레이터는 로그인 사용자만 활용 가능합니다.', 'error');
+                return;
+            }
             
-            document.getElementById(`view-${viewId}`).classList.remove('hidden');
-            state.currentView = viewId;
-            
-            if (viewId === 'staff-lounge') { renderUserSanctionsTable(); renderStaffMemos(); }
-            else if (viewId === 'super-security') { renderAdminProposals(); }
-            
-            gainXP(20); // 페이지 탐색 시 소량 경험치 제공
-        }
+            state.userVpnActive = !state.userVpnActive;
+            const icon = document.getElementById('vpn-toggle-icon');
+            const label = document.getElementById('vpn-toggle-label');
+            const btn = document.getElementById('vpn-simulation-toggle');
 
-        function getAdventurerTier(level) {
-            if (level >= 90) return '🔱 S+ 전설적 초월 마스터';
-            if (level >= 50) return '⚔️ B등급 중급 사수';
-            if (level >= 10) return '🛡️ C등급 수습 경비병';
-            return '🌱 F등급 아기 게이머';
-        }
-
-        function updateHeaderAndProfileUI() {
-            const guestPanel = document.getElementById('auth-guest');
-            const loggedPanel = document.getElementById('auth-logged');
-            
-            if (state.user) {
-                guestPanel.classList.add('hidden');
-                loggedPanel.classList.remove('hidden');
-                
-                const isMax = state.user.level >= state.config.maxLevel;
-                document.getElementById('user-badge').innerText = isMax ? `MAX.${state.user.level}` : `LV.${state.user.level}`;
-                document.getElementById('user-display-name').innerText = state.user.nickname;
-                document.getElementById('user-custom-title').innerText = state.user.customTitle || getAdventurerTier(state.user.level);
-                
-                const isStaff = state.user.role === 'admin' || state.user.role === 'deputy' || state.user.role === 'superadmin';
-                const isSuper = state.user.role === 'superadmin';
-                
-                document.getElementById('nav-staff-btn').className = isStaff ? "p-2.5 rounded-lg text-rose-400 hover:text-rose-300 flex items-center gap-2" : "hidden";
-                document.getElementById('nav-super-btn').className = isSuper ? "p-2.5 rounded-lg text-amber-400 hover:text-amber-300 flex items-center gap-2" : "hidden";
+            if (state.userVpnActive) {
+                icon.className = "fa-solid fa-circle text-amber-500 animate-pulse text-[10px]";
+                label.className = "text-amber-400 font-extrabold";
+                label.innerText = "🌐 VPN 접속중";
+                btn.className = "flex items-center gap-2 bg-amber-950/30 border border-amber-500/60 px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer select-none transition-all";
+                toast('🌐 VPN 가상 우회망에 접속되었습니다. 글/댓글 작성 시 [VPN] 뱃지가 즉각 부여됩니다.', 'system');
             } else {
-                guestPanel.classList.remove('hidden');
-                loggedPanel.classList.add('hidden');
-                document.getElementById('nav-staff-btn').classList.add('hidden');
-                document.getElementById('nav-super-btn').classList.add('hidden');
+                icon.className = "fa-solid fa-circle text-slate-500 text-[10px]";
+                label.className = "text-slate-400";
+                label.innerText = "🌐 VPN 꺼짐";
+                btn.className = "flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer hover:border-amber-500 select-none transition-all";
+                toast('🌐 VPN 연결이 해제되어 일반 IP 통신으로 변경되었습니다.', 'info');
             }
         }
 
-        function openMyInfoModal() {
-            if (!state.user) return;
-            document.getElementById('info-id').innerText = state.user.username;
-            document.getElementById('info-tier-badge').innerText = getAdventurerTier(state.user.level);
-            document.getElementById('info-custom-title').innerText = state.user.customTitle || '부여받은 칭호 없음';
+        // 가상 실시간 VPN 적발 및 완장 경보 전송 엔진
+        function triggerStaffSecurityAlert(forumName, nickname, targetText) {
+            const alertMsg = `[알림: VPN 사용자가 적발 되었습니다.[${forumName}:게시판/유저명:[${nickname}]]]`;
             
-            const isMax = state.user.level >= state.config.maxLevel;
-            const required = getRequiredXP(state.user.level);
+            const newAlertObj = {
+                id: Date.now(),
+                forumName: forumName,
+                username: state.user ? state.user.username : 'unknown',
+                nickname: nickname,
+                text: targetText
+            };
             
-            document.getElementById('info-xp-text').innerText = isMax ? '[만렙 봉인됨] 가드가 작동 중입니다.' : `${state.user.xp} / ${required} XP`;
-            document.getElementById('info-xp-bar').style.width = isMax ? '100%' : `${(state.user.xp / required) * 100}%`;
-            document.getElementById('info-config-summary').innerText = `※ 배율 한계선: ${state.config.maxLevel}Lv | 난이도 배수: ${state.config.xpMultiplier}`;
-            document.getElementById('info-nick-input').value = state.user.nickname;
-            
-            openModal('modal-myinfo');
+            state.securityAlerts.unshift(newAlertObj);
+
+            // 해당 완장 권한이 활성화된 경우에만 사이렌 팝업 노출 조건 확인
+            if (state.user) {
+                const activeForum = state.communities.find(c => c.id === state.activeForumId);
+                const isManager = activeForum && activeForum.manager === state.user.username;
+                const isLocalDeputy = state.user.role === 'forum_deputy' && state.user.managedForumId === state.activeForumId;
+                
+                const isStaff = state.user.role === 'superadmin' || state.user.role === 'deputy' || isManager || isLocalDeputy;
+
+                if (isStaff) {
+                    const alarmPop = document.getElementById('modal-vpn-alarm');
+                    const alarmTxt = document.getElementById('vpn-alarm-text');
+                    alarmTxt.innerText = alertMsg;
+                    alarmPop.classList.remove('hidden');
+                }
+            }
+
+            renderVPNAlertsList();
         }
 
-        // 액자형 슬라이더 조작용
-        function updateSlider() {
-            document.getElementById('slider-wrapper').style.transform = `translateX(${state.currentSlide * -100}%)`;
-            document.getElementById('slider-page-indicator').innerText = `${state.currentSlide + 1} / ${state.totalSlides}`;
+        function renderVPNAlertsList() {
+            const containers = ['staff-vpn-alerts-container', 'super-vpn-alerts-container'];
+            
+            containers.forEach(cid => {
+                const container = document.getElementById(cid);
+                if (!container) return;
+
+                if (state.securityAlerts.length === 0) {
+                    container.innerHTML = `<p class="text-[10px] text-slate-500 text-center py-4">보안 침입 적발 대장이 비어있습니다.</p>`;
+                    return;
+                }
+
+                container.innerHTML = state.securityAlerts.map(a => `
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-red-900/30 text-[11px] space-y-1">
+                        <div class="flex justify-between font-bold text-red-400">
+                            <span>🚨 ${a.forumName}</span>
+                            <span>${a.nickname}</span>
+                        </div>
+                        <p class="text-[10px] text-slate-400 bg-slate-900 p-1.5 rounded font-mono leading-normal">
+                            적발내용: "${a.text}"
+                        </p>
+                        <div class="flex justify-end gap-1.5 pt-1">
+                            <button onclick="punishVpnUser('${a.username}')" class="bg-red-950 text-[9px] text-red-400 px-2 py-0.5 rounded border border-red-800">뮤트처벌</button>
+                        </div>
+                    </div>
+                `).join('');
+            });
         }
-        function slideNext() { state.currentSlide = (state.currentSlide + 1) % state.totalSlides; updateSlider(); }
-        function slidePrev() { state.currentSlide = (state.currentSlide - 1 + state.totalSlides) % state.totalSlides; updateSlider(); }
+
+        function punishVpnUser(username) {
+            const target = state.users.find(u => u.username === username);
+            if (!target) return;
+            target.status = '채팅금지';
+            toast(`🛡️ 완장 직권 집행: [${target.nickname}] 님이 다중 우회 VPN 사용 혐의로 실시간 뮤트(채팅금지) 되었습니다.`, 'system');
+            renderUserSanctionsTable();
+        }
+
+        // 뷰 전환
+        function changeView(viewId) {
+            const views = ['view-home', 'view-proposals', 'view-staff-lounge', 'view-super-security', 'view-ad-manager', 'view-forum-detail', 'view-forum-admin-control'];
+            views.forEach(vid => {
+                const el = document.getElementById(vid);
+                if (el) el.classList.add('hidden');
+            });
+
+            if (viewId !== 'forum-detail' && viewId !== 'forum-admin-control') {
+                document.getElementById('nav-forum-admin-btn').classList.add('hidden');
+            }
+
+            const target = document.getElementById(`view-${viewId}`);
+            if (target) {
+                target.classList.remove('hidden');
+            }
+            state.currentView = viewId;
+
+            if (viewId === 'staff-lounge') { renderUserSanctionsTable(); renderStaffMemos(); populateDeputyAppointSelectors(); renderVPNAlertsList(); }
+            else if (viewId === 'super-security') { renderAdminProposals(); populateSuperAdminAppointSelectors(); renderSuperAdRevokeList(); renderCountryBlocks(); renderVPNAlertsList(); }
+            else if (viewId === 'ad-manager') { loadAdSlotSettings(); populateAdManagerAppointSelect(); renderAdAdminsStatusList(); }
+            
+            gainXP(20);
+        }
+
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
         function ctaRedirectToRegister() { closeModal('modal-cta-alert'); openModal('modal-register'); }
 
-        // 가상 로그인 / 가입 로직
-        function handleLogin() {
-            const nameInput = document.getElementById('login-username').value.trim();
-            if (!nameInput) return;
-            let target = state.users.find(u => u.username === nameInput);
-            if (!target) {
-                target = { username: nameInput, nickname: `${nameInput}_모험가`, role: 'user', level: 1, xp: 0, customTitle: '', warnings: 0, status: '정상' };
-                state.users.push(target);
+        // 게이트웨이 전용 단축이동
+        function gatewayNavigate(viewId) {
+            closeModal('modal-gateway');
+            changeView(viewId);
+        }
+
+        // 회원가입 실시간 아이디 검증
+        function validateUsernameRealtime() {
+            const val = document.getElementById('reg-username').value.trim();
+            const feedback = document.getElementById('reg-username-feedback');
+            
+            if (val === "") {
+                feedback.innerHTML = "";
+                return false;
             }
-            if (target.status === '영구정지') { toast('⛔ 정지 규격을 받은 유저 아이디입니다.', 'error'); return; }
+
+            const isValidLength = val.length >= 3 && val.length <= 20;
+            const isAlphanumeric = /^[a-zA-Z0-9_]+$/.test(val);
+
+            if (!isValidLength || !isAlphanumeric) {
+                feedback.className = "text-[10px] mt-1 text-red-500 font-semibold";
+                feedback.innerHTML = "❌ ID 규격: 3~20자의 영문, 숫자, 언더바(_) 조합이어야 합니다.";
+                return false;
+            }
+
+            const isDuplicate = state.users.some(u => u.username.toLowerCase() === val.toLowerCase());
+            if (isDuplicate) {
+                feedback.className = "text-[10px] mt-1 text-rose-500 font-semibold";
+                feedback.innerHTML = "❌ 이미 사용 중인 중복 ID입니다. 다른 ID를 입력해 주세요.";
+                return false;
+            } else {
+                feedback.className = "text-[10px] mt-1 text-emerald-400 font-bold";
+                feedback.innerHTML = "🟢 사용 가능한 독점 ID입니다. 보안 가드 적합성 일치!";
+                return true;
+            }
+        }
+
+        // 비밀번호 실시간 규칙성 검증 (최소 8자, 숫자 1개, 특수기호 1개)
+        function validatePasswordRealtime() {
+            const val = document.getElementById('reg-password').value;
+            const feedback = document.getElementById('reg-password-feedback');
+
+            if (val === "") {
+                feedback.innerHTML = "";
+                return false;
+            }
+
+            const isMinLength = val.length >= 8;
+            const hasDigit = /[0-9]/.test(val);
+            const hasSpecial = /[!@#$%^&*(),.?":{}|<>_+\-\[\]\\\/]/.test(val);
+
+            let alertMsg = [];
+            if (!isMinLength) alertMsg.push("최소 8자");
+            if (!hasDigit) alertMsg.push("숫자 1개 이상");
+            if (!hasSpecial) alertMsg.push("특수기호 1개 이상");
+
+            if (isMinLength && hasDigit && hasSpecial) {
+                feedback.className = "text-[10px] mt-1 text-emerald-400 font-bold";
+                feedback.innerHTML = "🟢 철통 보안 암호 수준 조건 충족 완료!";
+                return true;
+            } else {
+                feedback.className = "text-[10px] mt-1 text-rose-500 font-semibold";
+                feedback.innerHTML = `❌ 보안 요구사항 미달: ${alertMsg.join(', ')}가 필요합니다.`;
+                return false;
+            }
+        }
+
+        // 가상 로그인 집행
+        async function handleLogin() {
+            const nameInput = document.getElementById('login-username').value.trim();
+            const passwordInput = document.getElementById('login-password').value;
+            
+            if (!nameInput || !passwordInput) {
+                toast('아이디와 비밀번호를 모두 입력해 주십시오.', 'error');
+                return;
+            }
+
+            const target = state.users.find(u => u.username === nameInput);
+            if (!target) {
+                toast('존재하지 않는 회원 정보입니다.', 'error');
+                return;
+            }
+
+            if (target.status === '영구정지') {
+                toast('⛔ 계정이 영구정지된 유저입니다.', 'error');
+                return;
+            }
+
+            const enteredHash = await sha256(passwordInput);
+            if (enteredHash !== target.passwordHash) {
+                toast('❌ 비밀번호가 올바르지 않습니다.', 'error');
+                return;
+            }
+
             state.user = target;
             closeModal('modal-login');
             updateHeaderAndProfileUI();
             populateUserDropdowns();
             toast(`🌌 에테리아 세계 동기화 성공: ${state.user.nickname}님`, 'success');
             changeView('home');
+
+            if (state.currentView === 'forum-detail') {
+                updateForumWriteAreaPermission();
+                evaluateForumAdminContextButton();
+            }
         }
 
-        function handleRegister() {
+        // 신규 회원 등록
+        async function handleRegister() {
             const uId = document.getElementById('reg-username').value.trim();
+            const uPass = document.getElementById('reg-password').value;
             const uNick = document.getElementById('reg-nickname').value.trim();
-            if (!uId || !uNick) return;
-            const newUser = { username: uId, nickname: uNick, role: 'user', level: 1, xp: 0, customTitle: '', warnings: 0, status: '정상' };
+            const uLvl = parseInt(document.getElementById('reg-level').value);
+            const checkedAgree = document.getElementById('reg-agree-terms').checked;
+            
+            const isIdValid = validateUsernameRealtime();
+            const isPassValid = validatePasswordRealtime();
+
+            if (!isIdValid || !isPassValid) {
+                toast('❌ 가입 가이드라인 조건에 어긋난 부분이 있습니다.', 'error');
+                return;
+            }
+            if (!uNick) {
+                toast('활동 닉네임을 적어주십시오.', 'error');
+                return;
+            }
+            if (isNaN(uLvl) || uLvl < 1) {
+                toast('레벨은 1 이상이어야 합니다.', 'error');
+                return;
+            }
+            if (!checkedAgree) {
+                toast('서약서 동의 체크가 필요합니다.', 'error');
+                return;
+            }
+
+            const uPassHash = await sha256(uPass);
+
+            const newUser = { 
+                username: uId, 
+                passwordHash: uPassHash,
+                nickname: uNick, 
+                role: 'user', 
+                level: uLvl, 
+                xp: 0, 
+                warnings: 0, 
+                status: '정상',
+                phone: '',
+                isVerified: true, // 임시 주석 처리 상태로 자동 완전 인가됨
+                avatar: 'https://img.icons8.com/isometric/50/fantasy-dice.png'
+            };
+
             state.users.push(newUser);
             state.user = newUser;
             closeModal('modal-register');
             updateHeaderAndProfileUI();
             populateUserDropdowns();
-            toast(`✨ 신입 모험가 계정 생성이 정식 완료되었습니다.`, 'success');
+            
+            toast(`✨ 등록 완료! [${getAdventurerGrade(uLvl)}급] 모험가 자격이 주어졌습니다!`, 'success');
         }
 
-        function handleLogout() { state.user = null; updateHeaderAndProfileUI(); changeView('home'); toast('로그아웃되었습니다.', 'info'); }
-        function handleUpdateNickname() { state.user.nickname = document.getElementById('info-nick-input').value.trim(); closeModal('modal-myinfo'); updateHeaderAndProfileUI(); renderUserSanctionsTable(); }
+        // 로그아웃
+        function handleLogout() { 
+            state.user = null; 
+            closeModal('modal-myinfo');
+            updateHeaderAndProfileUI(); 
+            changeView('home'); 
+            toast('로그아웃 연결 해제되었습니다.', 'info'); 
+        }
 
-        // 커뮤니티 익명 신청 발송기
+        // 아바타 파일 프리뷰 로드
+        function previewMyInfoAvatarFile() {
+            const fileInput = document.getElementById('myinfo-avatar-file-input');
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const maxSizeBytes = 1024 * 1024; // 1MB 제한
+            if (file.size > maxSizeBytes) {
+                toast(`⛔ 이미지 용량 초과! (${Math.round(file.size / 1024)}KB) 5,000명 동시성 품질 보장을 위해 1MB 이하의 이미지만 가능합니다!`, 'error');
+                fileInput.value = ""; 
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                state.tempAvatarBase64 = e.target.result;
+                document.getElementById('myinfo-avatar-preview').src = e.target.result;
+                toast('✨ 이미지 가적재 완료! [저장하기] 버튼을 누르시면 정식 기록됩니다.', 'success');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // 미저장 변경 감지
+        function checkUnsavedChanges() {
+            if (!state.user) return false;
+            const inputNick = document.getElementById('myinfo-nickname-input').value.trim();
+            const hasNickChanged = inputNick !== state.user.nickname && inputNick !== "";
+            const hasAvatarChanged = state.tempAvatarBase64 !== null;
+            return hasNickChanged || hasAvatarChanged;
+        }
+
+        function saveMyPageChangesAction() {
+            if (!state.user) return false;
+            const newNick = document.getElementById('myinfo-nickname-input').value.trim();
+            if (!newNick) {
+                toast('활동 닉네임은 필수입니다.', 'error');
+                return false;
+            }
+
+            state.user.nickname = newNick;
+            if (state.tempAvatarBase64) {
+                state.user.avatar = state.tempAvatarBase64;
+            }
+            state.tempAvatarBase64 = null;
+            updateHeaderAndProfileUI();
+            renderUserSanctionsTable();
+            return true;
+        }
+
+        function handleMyPageSaveBtn() {
+            if (saveMyPageChangesAction()) {
+                toast('💾 프로필 저장 완료!', 'success');
+                closeModal('modal-myinfo');
+                changeView('home');
+            }
+        }
+
+        function closeMyInfoModalAttempt() {
+            if (checkUnsavedChanges()) {
+                openModal('modal-unsaved-warning');
+            } else {
+                closeModal('modal-myinfo');
+                changeView('home');
+            }
+        }
+
+        function handleSaveAndGoHome() {
+            if (saveMyPageChangesAction()) {
+                toast('💾 강제 저장 처리되었습니다!', 'success');
+                closeModal('modal-unsaved-warning');
+                closeModal('modal-myinfo');
+                changeView('home');
+            }
+        }
+
+        function handleDiscardAndGoHome() {
+            state.tempAvatarBase64 = null;
+            toast('⚠️ 변경 사항을 폐기했습니다.', 'info');
+            closeModal('modal-unsaved-warning');
+            closeModal('modal-myinfo');
+            changeView('home');
+        }
+
+        // 헤더 렌더러 업데이트
+        function updateHeaderAndProfileUI() {
+            const guestPanel = document.getElementById('auth-guest');
+            const loggedPanel = document.getElementById('auth-logged');
+            const vpnToggle = document.getElementById('vpn-simulation-toggle');
+            
+            if (state.user) {
+                guestPanel.classList.add('hidden');
+                loggedPanel.classList.remove('hidden');
+                vpnToggle.classList.remove('hidden');
+
+                const verifyStatusLabel = state.user.isVerified ? '[인증]' : '[미인증]';
+                document.getElementById('user-display-status-name').innerHTML = `
+                    <span class="text-emerald-400 font-bold mr-1 text-[10px]">${verifyStatusLabel}</span>
+                    <span class="text-slate-100 font-extrabold">${state.user.nickname}</span>
+                `;
+
+                const gradeText = getAdventurerFullDisplay(state.user);
+                document.getElementById('user-display-grade-level').innerText = `${gradeText} (LV.${state.user.level})`;
+
+                if (state.user.avatar) {
+                    document.getElementById('user-header-avatar').src = state.user.avatar;
+                }
+
+                const isSuper = state.user.role === 'superadmin';
+                const isDeputy = state.user.role === 'deputy' || state.user.role === 'superadmin';
+                
+                const isAdStaff = state.user.role === 'ad_manager' || state.user.role.startsWith('ad_admin_');
+                document.getElementById('nav-ad-btn').className = isAdStaff ? "p-2.5 rounded-lg text-emerald-400 hover:text-emerald-300 flex items-center gap-2" : "hidden";
+                document.getElementById('footer-ad-manage-shortcut').className = isAdStaff ? "text-[10px] text-emerald-400 hover:underline flex items-center gap-1" : "hidden";
+
+                document.getElementById('nav-staff-btn').className = isDeputy ? "p-2.5 rounded-lg text-rose-400 hover:text-rose-300 flex items-center gap-2" : "hidden";
+                document.getElementById('nav-super-btn').className = isSuper ? "p-2.5 rounded-lg text-yellow-400 hover:text-yellow-300 flex items-center gap-2" : "hidden";
+                
+                let roleLabel = getRoleKoreanLabel(state.user.role, state.user.managedForumId);
+                document.getElementById('ad-login-status').innerText = `${state.user.nickname} [${roleLabel}]`;
+
+                if (state.currentView === 'forum-detail') {
+                    evaluateForumAdminContextButton();
+                }
+            } else {
+                guestPanel.classList.remove('hidden');
+                loggedPanel.classList.add('hidden');
+                vpnToggle.classList.add('hidden');
+                
+                state.userVpnActive = false;
+                document.getElementById('vpn-toggle-icon').className = "fa-solid fa-circle text-slate-500 text-[10px]";
+                document.getElementById('vpn-toggle-label').className = "text-slate-400";
+                document.getElementById('vpn-toggle-label').innerText = "🌐 VPN 꺼짐";
+                document.getElementById('vpn-simulation-toggle').className = "hidden flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-xs font-bold cursor-pointer hover:border-amber-500 select-none transition-all";
+
+                document.getElementById('nav-staff-btn').classList.add('hidden');
+                document.getElementById('nav-super-btn').classList.add('hidden');
+                document.getElementById('nav-ad-btn').classList.add('hidden');
+                document.getElementById('nav-forum-admin-btn').classList.add('hidden');
+                document.getElementById('footer-ad-manage-shortcut').classList.add('hidden');
+                document.getElementById('ad-login-status').innerText = "게스트 (권한 없음)";
+            }
+        }
+
+        // 게시판 세부 열람 (조회수 가중 연동 실시간 증가 추가)
+        function viewSpecificForum(forumId) {
+            const forum = state.communities.find(c => c.id === forumId);
+            if (!forum) return;
+
+            state.activeForumId = forumId;
+            document.getElementById('forum-detail-title').innerText = forum.name;
+            document.getElementById('forum-detail-desc').innerText = forum.desc;
+            document.getElementById('forum-detail-genre').innerText = forum.genre;
+            document.getElementById('forum-manager-display').innerText = forum.manager;
+
+            // 실시간 조회수 자동 축적 갱신
+            state.posts.forEach(p => {
+                if (p.forumId === forumId) {
+                    p.views = (p.views || 0) + Math.floor(Math.random() * 4) + 1;
+                }
+            });
+
+            evaluateForumAdminContextButton();
+            updateForumWriteAreaPermission();
+            renderForumPosts();
+            renderHighlightsSlider(); // 슬라이더 즉시 리빌드
+            changeView('forum-detail');
+        }
+
+        function updateForumWriteAreaPermission() {
+            const isNoticeBoard = state.activeForumId === 999;
+            const writeTitle = document.getElementById('write-panel-title');
+            const inputsWrapper = document.getElementById('write-inputs-wrapper');
+            const highlightArea = document.getElementById('highlight-checkbox-area');
+
+            document.getElementById('post-to-highlight').checked = false;
+
+            if (isNoticeBoard) {
+                const isStaff = state.user && (state.user.role === 'superadmin' || state.user.role === 'deputy');
+                if (isStaff) {
+                    writeTitle.innerHTML = `<i class="fa-solid fa-bullhorn text-red-500 animate-pulse"></i> 에테리아 공식 공지 서판 작성 가동`;
+                    inputsWrapper.classList.remove('hidden');
+                    highlightArea.classList.remove('hidden');
+                    document.getElementById('post-submit-btn').innerText = "공식 공고 헌장 등록 (+100 XP)";
+                } else {
+                    writeTitle.innerHTML = `<i class="fa-solid fa-lock text-slate-500"></i> [공지 전용] 스태프 코어 전용 구역입니다. (읽기 전용)`;
+                    inputsWrapper.classList.add('hidden');
+                }
+            } else {
+                writeTitle.innerHTML = `<i class="fa-solid fa-pen-nib text-amber-500"></i> 새로운 모험 기록(글쓰기)`;
+                inputsWrapper.classList.remove('hidden');
+                highlightArea.classList.add('hidden');
+                document.getElementById('post-submit-btn').innerText = "에테리아 서판 등록 (+70 XP)";
+            }
+        }
+
+        // 포스트 렌더러 (조회수 UI 뱃지 추가 적용)
+        function renderForumPosts() {
+            const container = document.getElementById('board-posts-list');
+            if (!container) return;
+
+            const forumPosts = state.posts.filter(p => p.forumId === state.activeForumId);
+            if (forumPosts.length === 0) {
+                container.innerHTML = `<div class="py-8 text-center text-xs text-slate-500">등록된 게시글이 비어있습니다. 첫 기록을 각인해 보세요.</div>`;
+                return;
+            }
+
+            container.innerHTML = forumPosts.map(post => {
+                const commentHTML = post.comments.map(c => {
+                    const cVpnBadge = c.isVpn ? `<span class="bg-amber-500/10 text-amber-400 text-[8px] px-1 py-0.5 rounded border border-amber-500/20 font-bold ml-1.5"><i class="fa-solid fa-mask"></i> VPN</span>` : '';
+                    return `
+                        <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-900 mt-2 text-[11px] text-slate-300">
+                            <span class="font-bold text-amber-500 mr-2">${c.author}${cVpnBadge}:</span>
+                            <span>${c.text}</span>
+                        </div>
+                    `;
+                }).join('');
+
+                const isNoticeBoard = state.activeForumId === 999;
+                
+                let canModerate = false;
+                if (state.user) {
+                    const activeForum = state.communities.find(c => c.id === state.activeForumId);
+                    const isManager = activeForum && activeForum.manager === state.user.username;
+                    const isLocalDeputy = state.user.role === 'forum_deputy' && state.user.managedForumId === state.activeForumId;
+                    if (state.user.role === 'superadmin' || state.user.role === 'deputy' || isManager || isLocalDeputy) {
+                        canModerate = true;
+                    }
+                }
+
+                const highlightToggleBtn = (isNoticeBoard && canModerate) ? `
+                    <button onclick="togglePostHighlight(${post.id})" class="text-[10px] font-bold px-2 py-1 rounded transition border ${post.showInHighlight ? 'bg-red-600 hover:bg-red-500 text-slate-950 border-red-700' : 'bg-slate-800 hover:bg-slate-750 text-slate-300 border-slate-700'}">
+                        ${post.showInHighlight ? '<i class="fa-solid fa-toggle-on mr-1"></i> 하이라이트 노출 중' : '<i class="fa-solid fa-toggle-off mr-1"></i> 하이라이트 대기'}
+                    </button>
+                ` : '';
+
+                const deleteBtn = canModerate ? `
+                    <button onclick="deletePost(${post.id})" class="text-[10px] font-bold bg-rose-950/40 text-rose-400 hover:text-rose-200 border border-rose-900/60 px-2.5 py-1 rounded transition">
+                        <i class="fa-solid fa-trash-can mr-1"></i> 완장 삭제
+                    </button>
+                ` : '';
+
+                const postVpnBadge = post.isVpn ? `<span class="bg-amber-500/10 text-amber-400 text-[9px] px-1.5 py-0.5 rounded border border-amber-500/20 font-bold ml-1.5" title="보안 위협망(VPN) 감지"><i class="fa-solid fa-mask"></i> VPN</span>` : '';
+
+                return `
+                    <div class="py-4 space-y-2">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-100 flex items-center gap-2">
+                                    ${post.title}
+                                    ${post.showInHighlight ? '<span class="bg-red-500/10 text-red-400 text-[9px] px-1.5 py-0.5 rounded border border-red-500/20 font-bold">하이라이트 배너</span>' : ''}
+                                </h4>
+                                <p class="text-xs text-slate-400 mt-1 whitespace-pre-line leading-relaxed">${post.content}</p>
+                            </div>
+                            <div class="flex flex-col items-end gap-1">
+                                <span class="text-[10px] text-slate-500 font-mono bg-slate-950 px-2 py-1 rounded flex items-center gap-1">
+                                    by ${post.author}${postVpnBadge}
+                                </span>
+                                <div class="flex gap-1.5 mt-1">
+                                    ${highlightToggleBtn}
+                                    ${deleteBtn}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1 pl-4 border-l border-amber-600/20">
+                            <div class="flex items-center gap-2 py-1">
+                                <button onclick="likePost(${post.id})" class="bg-slate-950 hover:bg-slate-900 border border-slate-800 text-amber-500 text-[10px] font-bold px-2 py-1 rounded flex items-center gap-1.5 transition">
+                                    <i class="fa-solid fa-thumbs-up"></i> 추천 <span class="text-white">${post.likes || 0}</span>
+                                </button>
+                                <span class="bg-slate-950 border border-slate-800 text-slate-400 text-[10px] font-bold px-2.5 py-1 rounded flex items-center gap-1">
+                                    <i class="fa-solid fa-eye text-slate-500"></i> 조회 <span class="text-slate-200">${post.views || 0}</span>
+                                </span>
+                            </div>
+                            ${commentHTML}
+                            <div class="flex gap-2 mt-2 relative">
+                                <input type="text" id="cmt-input-${post.id}" placeholder="댓글 달기..." class="bg-slate-950 border border-slate-900 text-[11px] rounded p-1 w-full text-white focus:outline-none">
+                                <button onclick="submitNewComment(${post.id})" class="bg-amber-600 text-slate-950 px-2.5 rounded text-[10px] font-bold">등록</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 새 게시글 작성 (기본 조회수 부여)
+        function submitNewPost() {
+            if (!state.user) {
+                openModal('modal-cta-alert');
+                return;
+            }
+            if (state.user.status === '채팅금지') {
+                toast('⛔ 채팅금지 징계를 받아 서판 작성이 불가합니다.', 'error');
+                return;
+            }
+
+            const titleInput = document.getElementById('post-title').value.trim();
+            const contentInput = document.getElementById('post-content').value.trim();
+            const isNoticeBoard = state.activeForumId === 999;
+
+            if (titleInput.length < 2 || contentInput.length < 5) {
+                toast('제목은 최소 2자, 내용은 최소 5자 이상 기재해 주세요.', 'error');
+                return;
+            }
+
+            const showInHighlightVal = isNoticeBoard ? document.getElementById('post-to-highlight').checked : false;
+
+            const newPost = {
+                id: Date.now(),
+                forumId: state.activeForumId,
+                title: titleInput,
+                content: contentInput,
+                author: `${state.user.nickname} (${getAdventurerFullDisplay(state.user)})`,
+                likes: 0,
+                views: 5, // 기본 조회수 자동 부여
+                isAnnouncement: isNoticeBoard,
+                showInHighlight: showInHighlightVal,
+                isVpn: state.userVpnActive, 
+                comments: []
+            };
+
+            state.posts.unshift(newPost);
+            document.getElementById('post-title').value = "";
+            document.getElementById('post-content').value = "";
+            if (isNoticeBoard) {
+                document.getElementById('post-to-highlight').checked = false;
+            }
+
+            toast(isNoticeBoard ? '📢 공식 공지 칙령이 등록되었습니다.' : '📝 서판 기록 완료! 에테리아에 보존됩니다.', 'success');
+            gainXP(isNoticeBoard ? 100 : 70); 
+
+            // VPN 적발 시 사이렌 경고 작동
+            if (state.userVpnActive) {
+                const forum = state.communities.find(c => c.id === state.activeForumId);
+                const fName = forum ? forum.name.split(' ')[0] : '포럼';
+                triggerStaffSecurityAlert(fName, state.user.nickname, titleInput);
+            }
+
+            renderForumPosts();
+            renderHighlightsSlider(); 
+        }
+
+        // 댓글 작성
+        function submitNewComment(postId) {
+            if (!state.user) {
+                openModal('modal-cta-alert');
+                return;
+            }
+            if (state.user.status === '채팅금지') {
+                toast('⛔ 징계 상태이므로 댓글 등록 권한이 제한됩니다.', 'error');
+                return;
+            }
+
+            const input = document.getElementById(`cmt-input-${postId}`);
+            const text = input.value.trim();
+            if (!text) return;
+
+            const post = state.posts.find(p => p.id === postId);
+            if (post) {
+                post.comments.push({
+                    author: `${state.user.nickname} (${getAdventurerFullDisplay(state.user)})`,
+                    text: text,
+                    isVpn: state.userVpnActive 
+                });
+                input.value = "";
+                toast('댓글이 기록되었습니다. (+15 XP)', 'success');
+                gainXP(15);
+
+                if (state.userVpnActive) {
+                    const forum = state.communities.find(c => c.id === state.activeForumId);
+                    const fName = forum ? forum.name.split(' ')[0] : '포럼';
+                    triggerStaffSecurityAlert(fName, state.user.nickname, `댓글: ${text}`);
+                }
+
+                renderForumPosts();
+                renderHighlightsSlider(); 
+            }
+        }
+
+        function deletePost(postId) {
+            state.posts = state.posts.filter(p => p.id !== postId);
+            toast('🛡️ 완장 직권 집행: 게시글을 강제 삭제했습니다.', 'system');
+            renderForumPosts();
+            renderHighlightsSlider();
+        }
+
+        function togglePostHighlight(postId) {
+            const post = state.posts.find(p => p.id === postId);
+            if (!post) return;
+            post.showInHighlight = !post.showInHighlight;
+            toast(post.showInHighlight ? '📢 하이라이트 배너 노출 시작!' : '💤 하이라이트 배너 노출 중단.', 'system');
+            renderForumPosts();
+            renderHighlightsSlider();
+        }
+
+        function likePost(postId) {
+            if (!state.user) {
+                openModal('modal-cta-alert');
+                return;
+            }
+            const post = state.posts.find(p => p.id === postId);
+            if (!post) return;
+            post.likes = (post.likes || 0) + 1;
+            toast(`👍 [${post.title}] 글을 추천하셨습니다! (+10 XP)`, 'success');
+            gainXP(10);
+            renderForumPosts();
+            renderHighlightsSlider(); 
+        }
+
+        // 300x250 광고 배너 이미지 실시간 업로드 파서
+        function previewAdImageUpload() {
+            const fileInput = document.getElementById('ad-image-file-input');
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const maxSizeBytes = 1024 * 1024; // 1MB 제한
+            if (file.size > maxSizeBytes) {
+                toast(`⛔ 이미지 용량 초과! (${Math.round(file.size / 1024)}KB) 5,000명 트래픽 보장을 위해 1MB 이하의 고압축 이미지만 업로드해 주세요!`, 'error');
+                fileInput.value = "";
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                state.tempAdImageBase64 = e.target.result;
+                document.getElementById('ad-image-preview-area').classList.remove('hidden');
+                toast('✨ 광고 배경 이미지가 임시 가적재되었습니다. 행정 적용을 눌러 확정해 주세요.', 'success');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeAdUploadedImage() {
+            state.tempAdImageBase64 = null;
+            document.getElementById('ad-image-file-input').value = "";
+            document.getElementById('ad-image-preview-area').classList.add('hidden');
+            
+            const slotNum = parseInt(document.getElementById('ad-select-slot').value);
+            if (state.adSlots[slotNum]) {
+                state.adSlots[slotNum].image = null;
+            }
+            toast('🧹 지정된 슬롯 업로드 배경 이미지를 제거했습니다. 기본 그라데이션으로 환원됩니다.', 'info');
+        }
+
+        function renderAdBanners() {
+            const container = document.getElementById('ad-grid-container');
+            if (!container) return;
+
+            let html = "";
+            for (let i = 1; i <= 5; i++) {
+                const ad = state.adSlots[i];
+                let bgStyle = `class="ad-glow flex flex-col justify-between p-5 rounded-2xl bg-gradient-to-br ${ad.gradient} text-slate-950 font-bold border border-white/20 select-none relative overflow-hidden"`;
+                
+                // 로컬 이미지 업로드 여부에 따라 배경 우선 할당 분기 처리
+                if (ad.image) {
+                    bgStyle = `class="ad-glow flex flex-col justify-between p-5 rounded-2xl text-white font-bold border border-white/20 select-none relative overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('${ad.image}');"`;
+                }
+
+                const fontColor = ad.image ? "text-white" : "text-slate-950";
+
+                html += `
+                    <div ${bgStyle} style="width: 300px; height: 250px; min-width: 300px;">
+                        <div class="absolute -right-6 -bottom-6 opacity-10 text-[100px] pointer-events-none">
+                            <i class="fa-solid fa-crown"></i>
+                        </div>
+                        <div class="flex justify-between items-center z-10">
+                            <span class="bg-slate-950/25 ${ad.image ? 'text-slate-300' : 'text-slate-950'} text-[10px] px-2 py-0.5 rounded border border-black/10">AD SLOT 0${i}</span>
+                            <span class="text-[9px] bg-slate-950 text-amber-400 px-1.5 py-0.5 rounded font-mono font-bold">300x250</span>
+                        </div>
+                        <p class="text-sm tracking-tight leading-relaxed ${fontColor} z-10 my-auto text-center font-extrabold font-gaming">
+                            ${ad.text}
+                        </p>
+                        <div class="flex justify-between items-center mt-auto pt-2 border-t border-black/10 z-10">
+                            <span class="text-[9px] ${ad.image ? 'text-slate-400' : 'text-slate-900'} font-mono"><i class="fa-solid fa-lock"></i> ${i}번전담</span>
+                            <a href="${ad.link}" onclick="toast('${i}번 제휴 링크 연결 상태를 테스트합니다.', 'success'); return false;" class="bg-slate-950 text-amber-500 font-extrabold text-[10px] px-3 py-1 rounded-md transition hover:bg-slate-900">
+                                바로가기
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+
+        // 광고 변경 로드
+        function loadAdSlotSettings() {
+            const slotNum = document.getElementById('ad-select-slot').value;
+            const ad = state.adSlots[slotNum];
+            if (!ad) return;
+
+            document.getElementById('ad-text-input').value = ad.text;
+            document.getElementById('ad-link-input').value = ad.link;
+            document.getElementById('ad-gradient-hidden').value = ad.gradient;
+            document.getElementById('ad-image-file-input').value = "";
+            document.getElementById('ad-image-preview-area').classList.add('hidden');
+
+            const btns = document.querySelectorAll('.gradient-choice-btn');
+            btns.forEach(btn => {
+                const bgAttr = btn.getAttribute('onclick');
+                if (bgAttr && bgAttr.includes(ad.gradient)) {
+                    btn.classList.add('border-amber-400');
+                } else {
+                    btn.classList.remove('border-amber-400');
+                }
+            });
+        }
+
+        function selectAdGradient(gradientClass) {
+            document.getElementById('ad-gradient-hidden').value = gradientClass;
+            const btns = document.querySelectorAll('.gradient-choice-btn');
+            btns.forEach(btn => {
+                const bgAttr = btn.getAttribute('onclick');
+                if (bgAttr && bgAttr.includes(gradientClass)) {
+                    btn.classList.add('border-amber-400');
+                } else {
+                    btn.classList.remove('border-amber-400');
+                }
+            });
+        }
+
+        function saveAdSlotSettings() {
+            if (!state.user) {
+                toast('광고 통제를 위해 로그인 연결이 필요합니다.', 'error');
+                return;
+            }
+
+            const slotNum = parseInt(document.getElementById('ad-select-slot').value);
+            
+            let hasPermission = false;
+            if (state.user.role === 'superadmin' || state.user.role === 'ad_manager') {
+                hasPermission = true;
+            } else if (state.user.role === `ad_admin_${slotNum}`) {
+                hasPermission = true;
+            }
+
+            if (!hasPermission) {
+                toast(`⛔ 권한 반려: 귀하는 [${slotNum}번 광고 배너] 전담 관리 권한이 없습니다!`, 'error');
+                return;
+            }
+
+            const textVal = document.getElementById('ad-text-input').value.trim();
+            const linkVal = document.getElementById('ad-link-input').value.trim();
+            const gradientVal = document.getElementById('ad-gradient-hidden').value;
+
+            if (!textVal) {
+                toast('광고 출력 문구를 채워주십시오.', 'error');
+                return;
+            }
+
+            state.adSlots[slotNum].text = textVal;
+            state.adSlots[slotNum].link = linkVal;
+            state.adSlots[slotNum].gradient = gradientVal;
+
+            if (state.tempAdImageBase64) {
+                state.adSlots[slotNum].image = state.tempAdImageBase64;
+                state.tempAdImageBase64 = null;
+                document.getElementById('ad-image-preview-area').classList.add('hidden');
+            }
+
+            toast(`🟢 [${slotNum}번 슬롯] 광고 배너를 성공적으로 갱신 반영했습니다!`, 'system');
+            renderAdBanners();
+        }
+
+        // 국가 수신 차단 8개국 정밀 렌더러
+        function renderCountryBlocks() {
+            const grid = document.getElementById('country-block-grid');
+            if (!grid) return;
+            
+            const countries = { 
+                KR: '대한민국 🇰🇷', 
+                CN: '중국 🇨🇳', 
+                RU: '러시아 🇷🇺', 
+                US: '미국 🇺🇸', 
+                IN: '인도 🇮🇳', 
+                VN: '베트남 🇻🇳', 
+                JP: '일본 🇯🇵', 
+                GB: '영국 🇬🇧' 
+            };
+            
+            grid.innerHTML = Object.keys(countries).map(code => {
+                const isBlocked = state.blockRules[code];
+                const btnClass = isBlocked 
+                    ? 'bg-rose-950/60 border-rose-500 text-rose-400 hover:border-rose-400' 
+                    : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:border-slate-700';
+                
+                return `
+                    <button onclick="toggleCountryBlock('${code}')" class="p-3 rounded-xl border ${btnClass} font-bold transition-all text-left flex justify-between items-center shadow-inner">
+                        <span>${countries[code]}</span>
+                        <span class="font-mono text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded ${isBlocked ? 'bg-rose-500 text-slate-950' : 'bg-slate-800 text-emerald-400'}">
+                            ${isBlocked ? '차단' : '허용'}
+                        </span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function toggleCountryBlock(code) {
+            state.blockRules[code] = !state.blockRules[code];
+            toast(`Geo-Blocking: [${code}] 통제 규칙이 [${state.blockRules[code] ? '차단(REJECT)' : '허용(ACCEPT)'}]으로 선포되었습니다.`, 'system');
+            logTraffic(`[GEO-BLOCK-RULE] Country=${code} Blocked=${state.blockRules[code]}`);
+            renderCountryBlocks();
+        }
+
+        // 모의 가상 패킷 발송기 (최고관리자 및 부관리자 우회 규칙 바인딩)
+        function simulateTraffic() {
+            const country = document.getElementById('sim-country').value;
+            const isVpn = document.getElementById('sim-vpn').value === 'vpn';
+            logTraffic(`INBOUND: country=${country} | VPN=${isVpn}`);
+            
+            // 최고관리자 및 부관리자 방화벽 프리패스 면제 사령 로직
+            if (state.user) {
+                const isStaff = state.user.role === 'superadmin' || state.user.role === 'deputy';
+                if (isStaff) {
+                    logTraffic(`[STAFF-BYPASS] Staff [${state.user.nickname}] bypassed all firewall blocks successfully.`);
+                    toast(`🟢 [STAFF-BYPASS] 스태프 권한 면제 적용: 어떤 국가 설정에 무관하게 통과되었습니다!`, 'system');
+                    gainXP(50);
+                    return;
+                }
+            }
+
+            if (isVpn && document.getElementById('vpn-switch').checked) {
+                toast('🛡️ 가상 우회망 감지에 따른 수신 거부', 'error');
+                logTraffic(`[REJECT-VPN] Inbound block by Defense AI.`);
+                return;
+            }
+            if (state.blockRules[country]) {
+                toast(`🛡️ 지정 차단국가 트래픽 수신이 거부되었습니다. (${country})`, 'error');
+                logTraffic(`[REJECT-COUNTRY] Inbound block for: ${country}`);
+                return;
+            }
+            
+            toast('🟢 테스트 패킷 보안성 검증 합격', 'system');
+            gainXP(50);
+        }
+
+        // 최고관리자 스태프 진급 조치
+        function handleAppointBySuperAdmin() {
+            if (!state.user || state.user.role !== 'superadmin') return;
+
+            const targetId = document.getElementById('super-appoint-target-user').value;
+            const chosenRole = document.getElementById('super-appoint-role').value;
+            const targetForumId = parseInt(document.getElementById('super-appoint-target-forum').value);
+
+            if (!targetId) return;
+            const targetUser = state.users.find(u => u.username === targetId);
+            if (!targetUser) return;
+
+            if (chosenRole === 'deputy') {
+                targetUser.role = 'deputy';
+                targetUser.level = Math.max(targetUser.level, 500);
+                targetUser.managedForumId = null;
+                toast(`👑 행정 처분: [${targetUser.nickname}] 님이 에테리아 부관리자로 정식 인가되었습니다.`, 'system');
+            } else if (chosenRole === 'ad_manager') {
+                targetUser.role = 'ad_manager';
+                targetUser.level = Math.max(targetUser.level, 300);
+                targetUser.managedForumId = null;
+                toast(`👑 행정 처분: [${targetUser.nickname}] 님이 에테리아 총광고관리자로 정식 인가되었습니다.`, 'system');
+            } else if (chosenRole === 'forum_admin') {
+                if (isNaN(targetForumId)) return;
+                targetUser.role = 'forum_admin';
+                targetUser.managedForumId = targetForumId;
+
+                const targetForum = state.communities.find(c => c.id === targetForumId);
+                if (targetForum) {
+                    targetForum.manager = targetUser.username;
+                }
+                toast(`🛡️ 행정 처분: [${targetUser.nickname}] 님이 [${targetForum ? targetForum.name.split(' ')[0] : '포럼'}]의 수장으로 발탁되었습니다.`, 'system');
+            }
+
+            updateHeaderAndProfileUI();
+            populateSuperAdminAppointSelectors();
+            renderUserSanctionsTable();
+            renderSuperAdRevokeList();
+        }
+
+        function toggleSuperForumSelector() {
+            const role = document.getElementById('super-appoint-role').value;
+            const area = document.getElementById('super-forum-select-area');
+            if (role === 'forum_admin') {
+                area.classList.remove('hidden');
+            } else {
+                area.classList.add('hidden');
+            }
+        }
+
+        // 익명 건의록 심사부 개설
         function submitCommunityProposal() {
             const pName = document.getElementById('req-comm-name').value.trim();
             const pGenre = document.getElementById('req-comm-genre').value;
@@ -791,12 +2208,11 @@
             state.proposals.push({ id: Date.now(), title: pName, genre: pGenre, requester: "익명 게이머", desc: pDesc });
             document.getElementById('req-comm-name').value = '';
             document.getElementById('req-comm-desc').value = '';
-            toast('📨 개설 건의서가 최고관리자 코어 보안 시스템에 정상 안착되었습니다.', 'system');
+            toast('📨 개설 건의서가 코어 시스템에 정상 안착되었습니다.', 'system');
             gainXP(60);
             changeView('home');
         }
 
-        // 최고관리자: 익명 건의록 심사 렌더링
         function renderAdminProposals() {
             const listContainer = document.getElementById('super-proposal-list');
             document.getElementById('proposal-count-badge').innerText = `대기: ${state.proposals.length}건`;
@@ -806,7 +2222,6 @@
                 <div class="py-3 text-xs space-y-1.5">
                     <div class="flex justify-between font-bold text-slate-300">
                         <span>[${prop.genre}] ${prop.title}</span>
-                        <span class="text-[10px] text-slate-500">by 익명</span>
                     </div>
                     <p class="bg-slate-950 p-2 rounded text-slate-400 border border-slate-900">${prop.desc}</p>
                     <div class="flex justify-end gap-2">
@@ -819,48 +2234,115 @@
 
         function rejectProposal(id) { state.proposals = state.proposals.filter(p => p.id !== id); renderAdminProposals(); }
         
-        // 포럼 신규 건설 및 특정 관리자 완장 위장 수임 조항
         function approveAndCreateCommunity(id, name, genre) {
-            const managerId = prompt("이 새 커뮤니티의 관리 제재 권한을 전담할 특정 매니저 유저 ID를 기입하십시오:", "sub_admin");
+            const managerId = prompt("이 새 커뮤니티의 전담 게시판 관리자 ID를 지정해 주세요:", "lol_manager");
             if (!managerId) return;
             const validUser = state.users.find(u => u.username === managerId);
-            if (!validUser) { toast('해당 유저 ID를 찾을 수 없습니다. (먼저 로그인/가입 필요)', 'error'); return; }
+            if (!validUser) { toast('해당 유저 ID를 찾을 수 없습니다.', 'error'); return; }
 
-            state.communities.push({ id: Date.now(), name, genre, desc: `에테리아 정식 인가 포럼. 전용 위장 완장: ${validUser.nickname}`, manager: managerId });
+            validUser.role = 'forum_admin';
+            const newForumId = Date.now();
+            validUser.managedForumId = newForumId;
+
+            state.communities.push({ 
+                id: newForumId, 
+                name, 
+                genre, 
+                desc: `에테리아 정식 인가 포럼. 대표 완장: ${validUser.nickname}`, 
+                manager: managerId 
+            });
+
             state.proposals = state.proposals.filter(p => p.id !== id);
             renderAdminProposals();
             renderCommunityCards();
-            toast(`🏗️ [${name}] 광장이 생성되었습니다! (전용 완장: ${validUser.nickname})`, 'success');
+            toast(`🏗️ [${name}] 광장이 생성되었습니다! (대표 완장: ${validUser.nickname})`, 'success');
         }
 
-        // 광장 카드 리스트 렌더러
+        // 광고 해임 및 강등
+        function renderSuperAdRevokeList() {
+            const tbody = document.getElementById('super-ad-revoke-list');
+            if (!tbody) return;
+
+            const adStaffs = state.users.filter(u => u.role === 'ad_manager' || u.role.startsWith('ad_admin_'));
+            if (adStaffs.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-slate-500">지정된 광고 직무 수임자가 없습니다.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = adStaffs.map(u => {
+                let slotLabel = '-';
+                if (u.role.startsWith('ad_admin_')) {
+                    slotLabel = `${u.role.split('_')[2]}번 슬롯`;
+                }
+
+                return `
+                    <tr class="border-b border-slate-900">
+                        <td class="p-3 font-mono font-bold text-slate-300">${u.username}<br><span class="text-[9px] text-slate-500">${u.nickname}</span></td>
+                        <td class="font-semibold text-emerald-400">${getRoleKoreanLabel(u.role, null)}</td>
+                        <td class="font-mono text-slate-400">${slotLabel}</td>
+                        <td class="text-right p-3">
+                            <button onclick="revokeAdAdmin('${u.username}')" class="bg-rose-950/60 hover:bg-rose-800 text-rose-400 hover:text-white px-2 py-1 rounded border border-rose-900/40 text-[10px] font-bold transition">
+                                <i class="fa-solid fa-user-slash mr-1"></i> 해임 및 강등
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function revokeAdAdmin(username) {
+            if (!state.user || state.user.role !== 'superadmin') return;
+            const targetUser = state.users.find(u => u.username === username);
+            if (!targetUser) return;
+
+            const oldRole = targetUser.role;
+            targetUser.role = 'user';
+            targetUser.level = 1;
+
+            if (oldRole.startsWith('ad_admin_')) {
+                const slotNum = oldRole.split('_')[2];
+                if (state.adSlots[slotNum]) {
+                    state.adSlots[slotNum].currentAdmin = null;
+                }
+            }
+
+            toast(`🛑 최고 행정명령: [${targetUser.nickname}] 님의 광고 권한을 회수하여 강등 처리했습니다.`, 'system');
+            renderSuperAdRevokeList();
+            renderAdAdminsStatusList();
+            updateHeaderAndProfileUI();
+        }
+
+        // 포럼 목록 생성
         function renderCommunityCards() {
             const grid = document.getElementById('community-grid');
             const filtered = state.communities.filter(c => state.activeGenre === 'ALL' || c.genre === state.activeGenre);
             
             if (filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full py-12 text-center text-xs text-slate-500">개설된 광장이 비어 있습니다. '개설 요청' 탭에서 익명으로 신청해 보세요!</div>`;
+                grid.innerHTML = `<div class="col-span-full py-12 text-center text-xs text-slate-500">포럼이 비어 있습니다. '개설 요청' 탭에서 신청해 보세요!</div>`;
                 return;
             }
 
             grid.innerHTML = filtered.map(c => {
-                // 특정 포럼 전용 관리 권한 체크 (내가 최고운영자거나 해당 포럼 완장인 경우)
-                const hasLocalPower = state.user && (state.user.username === c.manager || state.user.role === 'superadmin' || state.user.role === 'deputy');
+                const isNotice = c.genre === 'NOTICE';
+                const cardBorder = isNotice ? 'border-red-900/60 hover:border-red-600/50 bg-red-950/10' : 'border-slate-800 hover:border-amber-500/50';
+                const tagColor = isNotice ? 'bg-red-500/10 text-red-400 border border-red-500/20' : 'bg-slate-950 text-amber-500';
+
+                const managerObj = state.users.find(u => u.username === c.manager);
+                const managerDisplay = managerObj ? `${managerObj.nickname} (${managerObj.username})` : c.manager;
+
                 return `
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-amber-500/50 transition flex flex-col justify-between">
+                    <div class="bg-slate-900 border ${cardBorder} rounded-xl p-5 transition flex flex-col justify-between">
                         <div class="space-y-2">
                             <div class="flex justify-between items-center">
-                                <span class="bg-slate-950 text-[9px] text-amber-500 px-2 py-0.5 rounded font-gaming">${c.genre}</span>
-                                ${hasLocalPower ? `<span class="text-[9px] bg-red-600 text-slate-950 font-extrabold px-1.5 rounded shadow"><i class="fa-solid fa-crown"></i> 내 통제구역</span>` : ''}
+                                <span class="${tagColor} text-[9px] px-2 py-0.5 rounded font-gaming">${c.genre}</span>
                             </div>
                             <h3 class="font-bold text-white">${c.name}</h3>
                             <p class="text-xs text-slate-400">${c.desc}</p>
                         </div>
                         <div class="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-[11px]">
-                            <span class="text-slate-500"><i class="fa-solid fa-user-shield"></i> 전용수임: ${c.manager}</span>
+                            <span class="text-slate-500" title="${c.manager}"><i class="fa-solid fa-user-shield"></i> 완장: ${managerDisplay}</span>
                             <div class="flex gap-1.5">
-                                ${hasLocalPower ? `<button onclick="toast('[${c.name}] 포럼 전용 관리 직권을 시뮬레이션 가동합니다.', 'system')" class="text-rose-400 bg-rose-950/40 text-[10px] px-2 py-1 rounded border border-rose-900/30 font-bold">완장 통제</button>` : ''}
-                                <button onclick="triggerWriteAlert('${c.genre}')" class="bg-amber-600 text-slate-950 font-bold text-[10px] px-2.5 py-1 rounded">입장</button>
+                                <button onclick="viewSpecificForum(${c.id})" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-[10px] px-2.5 py-1 rounded transition">입장</button>
                             </div>
                         </div>
                     </div>
@@ -868,32 +2350,30 @@
             }).join('');
         }
 
-        function triggerWriteAlert(genre) {
-            if (!state.user) { openModal('modal-cta-alert'); return; }
-            if (state.user.status === '채팅금지') { toast('⛔ 계정 제재로 인해 글 작성이 전면 차단되었습니다.', 'error'); return; }
-            toast(`💬 [${genre}] 광장 글쓰기 양식 인가 완료 (+70 XP 적립)`, 'success');
-            gainXP(70);
-        }
-
         function filterGame(genre) { state.activeGenre = genre; renderCommunityCards(); }
 
-        // 스태프: 유저 제재 처리 엔진
         function renderUserSanctionsTable() {
             const tbody = document.getElementById('user-sanctions-table');
             if (!tbody) return;
-            tbody.innerHTML = state.users.map(u => `
-                <tr class="border-b border-slate-800/40 text-xs">
-                    <td class="py-2.5 font-bold">${u.username}<br><span class="text-[9px] text-slate-500">${u.nickname}</span></td>
-                    <td><span class="text-amber-500 font-bold">${u.role}</span><br><span class="text-[10px]">LV.${u.level}</span></td>
-                    <td class="text-rose-400 font-bold font-gaming">${u.warnings}회</td>
-                    <td>${u.status}</td>
-                    <td class="text-right space-x-1 whitespace-nowrap">
-                        <button onclick="applySanction('${u.username}', 'warn')" class="bg-slate-950 text-[10px] px-1 py-0.5 rounded border border-slate-800 text-slate-300">경고</button>
-                        <button onclick="applySanction('${u.username}', 'mute')" class="bg-amber-600/10 text-amber-400 text-[10px] px-1 py-0.5 rounded border border-amber-500/20">뮤트</button>
-                        <button onclick="pardonUser('${u.username}')" class="bg-emerald-600 text-slate-950 font-bold text-[10px] px-1.5 py-0.5 rounded">사면</button>
-                    </td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = state.users.map(u => {
+                let roleColor = "text-amber-500";
+                if (u.role === 'superadmin') roleColor = "text-red-500 animate-pulse";
+                else if (u.role === 'deputy') roleColor = "text-rose-400";
+
+                return `
+                    <tr class="border-b border-slate-800/40 text-xs">
+                        <td class="py-2.5 font-bold">${u.username}<br><span class="text-[9px] text-slate-500">${u.nickname}</span></td>
+                        <td><span class="${roleColor} font-bold">${u.role}</span><br><span class="text-[10px] font-semibold text-slate-400">등급: ${getAdventurerGrade(u.level)} (LV.${u.level})</span></td>
+                        <td class="text-rose-400 font-bold font-gaming">${u.warnings}회</td>
+                        <td>${u.status}</td>
+                        <td class="text-right space-x-1">
+                            <button onclick="applySanction('${u.username}', 'warn')" class="bg-slate-950 text-[10px] px-1.5 py-0.5 rounded border border-slate-800 text-slate-300">경고</button>
+                            <button onclick="applySanction('${u.username}', 'mute')" class="bg-amber-600/10 text-amber-400 text-[10px] px-1.5 py-0.5 rounded border border-amber-500/20">뮤트</button>
+                            <button onclick="pardonUser('${u.username}')" class="bg-emerald-600 text-slate-950 font-bold text-[10px] px-2 py-0.5 rounded">사면</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
         function applySanction(username, type) {
@@ -904,77 +2384,490 @@
             renderUserSanctionsTable();
         }
 
-        // 사면 사령부 (선량한 게이머 가드 로직 탑재)
         function pardonUser(username) {
             const target = state.users.find(u => u.username === username);
             if (!target) return;
-            
             if (target.warnings === 0 && target.status === '정상') {
-                toast(`💡 ${target.nickname} 모험가는 이미 벌점 기록이 전혀 없는 백무결점의 선량하고 정직한 게이머입니다!`, 'system');
+                toast(`💡 ${target.nickname} 모험가는 이미 벌점 기록이 없는 선량한 게이머입니다!`, 'system');
                 return;
             }
-            
-            target.warnings = 0; target.status = '정상'; toast('🕊️ 모험가의 행정 벌점이 정상 전면 해제 면제되었습니다.', 'success');
+            target.warnings = 0; target.status = '정상'; toast('🕊️ 행정 처분이 사면 및 초기화되었습니다.', 'success');
             renderUserSanctionsTable();
         }
 
-        function populateUserDropdowns() {
-            const tSelect = document.getElementById('title-target-user');
-            const aSelect = document.getElementById('appoint-target-user');
-            if (!tSelect || !aSelect) return;
-            const opts = `<option value="">유저 타겟 식별</option>` + state.users.map(u => `<option value="${u.username}">${u.nickname}</option>`).join('');
-            tSelect.innerHTML = opts; aSelect.innerHTML = opts;
+        function populateAdManagerAppointSelect() {
+            const sel = document.getElementById('ad-appoint-user');
+            if (!sel) return;
+            const generalUsers = state.users.filter(u => u.role === 'user');
+            sel.innerHTML = generalUsers.map(u => `<option value="${u.username}">${u.nickname} (${u.username})</option>`).join('');
         }
 
-        function awardCustomTitle() {
-            const targetId = document.getElementById('title-target-user').value;
-            const newTitle = document.getElementById('custom-title-input').value.trim();
-            if (!targetId || !newTitle) return;
-            const target = state.users.find(u => u.username === targetId);
-            if (target) { target.customTitle = `🏆 ${newTitle}`; toast(`[${target.nickname}] 님에게 특수 칭호 하사 완료`, 'success'); document.getElementById('custom-title-input').value = ''; updateHeaderAndProfileUI(); }
-        }
+        function renderAdAdminsStatusList() {
+            const list = document.getElementById('ad-admins-status-list');
+            if (!list) return;
 
-        function handleAppointRole() {
-            const targetId = document.getElementById('appoint-target-user').value;
-            const newRole = document.getElementById('appoint-role').value;
-            if (!targetId) return;
-            const target = state.users.find(u => u.username === targetId);
-            if (target) {
-                target.role = newRole;
-                if (newRole === 'superadmin') target.level = 999;
-                else if (newRole === 'admin') target.level = 300;
-                else target.level = 1;
-                toast(`👑 대상 유저의 등급 수임 조치가 승인되었습니다.`, 'system');
-                if (state.user && state.user.username === target.username) { state.user = target; updateHeaderAndProfileUI(); }
-                renderUserSanctionsTable();
+            let html = "";
+            for (let i = 1; i <= 5; i++) {
+                const adminUser = state.users.find(u => u.role === `ad_admin_${i}`);
+                const displayTxt = adminUser ? `${adminUser.nickname} (${adminUser.username})` : `<span class="text-rose-500 font-bold">미지정 (최고운영진 제어)</span>`;
+                html += `
+                    <div class="py-2.5 flex justify-between items-center text-xs border-b border-slate-800">
+                        <span class="text-slate-400 font-semibold">${i}번 슬롯</span>
+                        <span class="font-mono text-emerald-400">${displayTxt}</span>
+                    </div>
+                `;
             }
+            list.innerHTML = html;
+        }
+
+        function handleAppointAdAdmin() {
+            if (!state.user || state.user.role !== 'ad_manager') {
+                toast('오직 총광고관리자(ad_manager)만 이 권한을 행사할 수 있습니다.', 'error');
+                return;
+            }
+
+            const targetId = document.getElementById('ad-appoint-user').value;
+            const slotNum = parseInt(document.getElementById('ad-appoint-target-slot').value);
+
+            if (!targetId || isNaN(slotNum)) {
+                toast('대상과 광고 슬롯을 정해 주십시오.', 'error');
+                return;
+            }
+
+            const targetUser = state.users.find(u => u.username === targetId);
+            if (!targetUser) return;
+
+            targetUser.role = `ad_admin_${slotNum}`;
+            targetUser.level = Math.max(targetUser.level, 200);
+            state.adSlots[slotNum].currentAdmin = targetId;
+
+            toast(`📢 총광고관리자 인가: [${targetUser.nickname}] 모험가를 [${slotNum}번 슬롯] 광고관리자로 전격 임명했습니다!`, 'system');
+            populateAdManagerAppointSelect();
+            renderAdAdminsStatusList();
+            updateHeaderAndProfileUI();
+        }
+
+        function populateDeputyAppointSelectors() {
+            const userSel = document.getElementById('deputy-target-user-appoint');
+            const forumSel = document.getElementById('deputy-target-forum-appoint');
+            if (!userSel || !forumSel) return;
+
+            const candidates = state.users.filter(u => u.role === 'user');
+            userSel.innerHTML = candidates.map(u => `<option value="${u.username}">${u.nickname} (LV.${u.level})</option>`).join('');
+
+            const forums = state.communities.filter(c => c.id !== 999);
+            forumSel.innerHTML = forums.map(f => `<option value="${f.id}">${f.name}</option>`).join('');
+        }
+
+        function appointForumAdminByDeputy() {
+            if (!state.user || (state.user.role !== 'deputy' && state.user.role !== 'superadmin')) return;
+
+            const targetId = document.getElementById('deputy-target-user-appoint').value;
+            const targetForumId = parseInt(document.getElementById('deputy-target-forum-appoint').value);
+
+            if (!targetId || isNaN(targetForumId)) {
+                toast('진급 대상과 관할 포럼을 식별해 주십시오.', 'error');
+                return;
+            }
+
+            const targetUser = state.users.find(u => u.username === targetId);
+            if (!targetUser) return;
+
+            targetUser.role = 'forum_admin';
+            targetUser.managedForumId = targetForumId;
+
+            const targetForum = state.communities.find(c => c.id === targetForumId);
+            if (targetForum) {
+                targetForum.manager = targetUser.username;
+            }
+
+            toast(`🛡️ 부관리자 진급 인가: [${targetUser.nickname}] 모험가가 [${targetForum ? targetForum.name.split(' ')[0] : '포럼'}]의 관리자로 위임되었습니다.`, 'system');
+            populateDeputyAppointSelectors();
+            updateHeaderAndProfileUI();
+        }
+
+        function populateUserDropdowns() {
+            populateSuperAdminAppointSelectors();
         }
 
         function renderStaffMemos() {
             const container = document.getElementById('staff-memo-list'); if (!container) return;
-            if (state.staffMemos.length === 0) { container.innerHTML = `<p class="text-[11px] text-slate-500 text-center py-4">기록된 보안 인수인계 사항이 없습니다.</p>`; return; }
+            if (state.staffMemos.length === 0) { container.innerHTML = `<p class="text-[11px] text-slate-500 text-center py-4">기록된 메모가 없습니다.</p>`; return; }
             container.innerHTML = state.staffMemos.map(m => `<div class="bg-slate-950 p-2 text-xs rounded border border-slate-900"><p class="font-bold text-amber-500">${m.author}</p><p class="text-slate-300">${m.text}</p></div>`).join('');
         }
+
         function postStaffMemo() {
             const text = document.getElementById('staff-memo-input').value.trim(); if (!text || !state.user) return;
             state.staffMemos.unshift({ id: Date.now(), author: state.user.nickname, text });
             document.getElementById('staff-memo-input').value = ''; renderStaffMemos();
         }
 
-        function toggleCountryBlock(code) { state.blockRules[code] = !state.blockRules[code]; logTraffic(`Block rule updated for "${code}": REJECT=${state.blockRules[code]}`); }
         function logTraffic(msg) {
             const term = document.getElementById('traffic-log-terminal'); if (!term) return;
             const div = document.createElement('div'); div.innerText = `[${new Date().toLocaleTimeString()}] ${msg}`; term.appendChild(div); term.scrollTop = term.scrollHeight;
         }
 
-        function simulateTraffic() {
-            const country = document.getElementById('sim-country').value;
-            const isVpn = document.getElementById('sim-vpn').value === 'vpn';
-            logTraffic(`INBOUND: country=${country} | VPN=${isVpn}`);
-            if (isVpn && document.getElementById('vpn-switch').checked) { toast('🛡️ 가상 우회망 감지에 따른 수신 거부', 'error'); return; }
-            if (state.blockRules[country]) { toast(`🛡️ 지정 차단국가 트래픽 거부 완료 (${country})`, 'error'); return; }
-            toast('🟢 테스트 패킷 보안성 검증 합격', 'system');
-            gainXP(50);
+        function getAdventurerGrade(level) {
+            if (level >= 90) return 'S급';
+            if (level >= 75) return 'A급';
+            if (level >= 60) return 'B급';
+            if (level >= 45) return 'C급';
+            if (level >= 30) return 'D급';
+            if (level >= 20) return 'E급';
+            if (level >= 10) return 'F급';
+            return 'G급';
+        }
+
+        function getAdventurerFullDisplay(user) {
+            const grade = getAdventurerGrade(user.level);
+            return `${grade} 모험가`;
+        }
+
+        function updateSystemConfig() {
+            const maxLvl = parseInt(document.getElementById('config-max-level').value);
+            const xpMult = parseInt(document.getElementById('config-xp-multiplier').value);
+            
+            if (isNaN(maxLvl) || maxLvl < 1 || isNaN(xpMult) || xpMult < 10) {
+                toast('입력값 범위 에러입니다.', 'error');
+                return;
+            }
+
+            state.config.maxLevel = maxLvl;
+            state.config.xpMultiplier = xpMult;
+            
+            toast(`⚙️ 행정 규칙 수정 완료: 만렙 제한 [${maxLvl}] / 난이도 배수 [${xpMult}]!`, 'system');
+            logTraffic(`[CONFIG-CHANGED] MaxLevel=${maxLvl}, XPMultiplier=${xpMult}`);
+            updateHeaderAndProfileUI();
+        }
+
+        function gainXP(amount) {
+            if (!state.user) return;
+            if (state.user.level >= state.config.maxLevel) {
+                state.user.xp = 0;
+                return;
+            }
+            state.user.xp += amount;
+            let required = getRequiredXP(state.user.level);
+            while (state.user.xp >= required) {
+                if (state.user.level >= state.config.maxLevel) {
+                    state.user.xp = 0;
+                    break;
+                }
+                state.user.xp -= required;
+                state.user.level += 1;
+                toast(`🎉 LEVEL UP! [${state.user.level} 레벨]에 도달했습니다!`, 'success');
+                required = getRequiredXP(state.user.level);
+            }
+            updateHeaderAndProfileUI();
+        }
+
+        function populateSuperAdminAppointSelectors() {
+            const userSel = document.getElementById('super-appoint-target-user');
+            const forumSel = document.getElementById('super-appoint-target-forum');
+            if (!userSel || !forumSel) return;
+
+            const candidates = state.users.filter(u => u.role !== 'superadmin');
+            userSel.innerHTML = candidates.map(u => `<option value="${u.username}">${u.nickname} (${u.role})</option>`).join('');
+
+            const forums = state.communities.filter(c => c.id !== 999);
+            forumSel.innerHTML = forums.map(f => `<option value="${f.id}">${f.name}</option>`).join('');
+        }
+
+        function evaluateForumAdminContextButton() {
+            const btn = document.getElementById('nav-forum-admin-btn');
+            if (!state.user || !state.activeForumId) {
+                btn.classList.add('hidden');
+                return;
+            }
+
+            const activeForum = state.communities.find(c => c.id === state.activeForumId);
+            if (!activeForum) {
+                btn.classList.add('hidden');
+                return;
+            }
+
+            const isTargetManager = (activeForum.manager === state.user.username);
+            const isLocalForumAdmin = (state.user.role === 'forum_admin' && state.user.managedForumId === state.activeForumId);
+            const hasAuthority = isTargetManager || isLocalForumAdmin || state.user.role === 'superadmin' || state.user.role === 'deputy';
+
+            if (hasAuthority) {
+                btn.classList.remove('hidden');
+            } else {
+                btn.classList.add('hidden');
+            }
+        }
+
+        function getRoleKoreanLabel(role, managedForumId) {
+            if (role === 'superadmin') return "👑 최고관리자";
+            if (role === 'deputy') return "🔱 부관리자";
+            if (role === 'ad_manager') return "⚜️ 에테리아 총광고관리자";
+            if (role.startsWith('ad_admin_')) return `📢 ${role.split('_')[2]}번 전담광고관리자`;
+            if (role === 'forum_admin') {
+                const targetF = state.communities.find(c => c.id === managedForumId);
+                const fName = targetF ? targetF.name.split(' ')[0] : '포럼';
+                return `🛡️ [${fName}] 게시판 관리자`;
+            }
+            if (role === 'forum_deputy') {
+                const targetF = state.communities.find(c => c.id === managedForumId);
+                const fName = targetF ? targetF.name.split(' ')[0] : '포럼';
+                return `⚔️ [${fName}] 게시판 부관리자`;
+            }
+            return "모험가";
+        }
+
+        function getRequiredXP(level) {
+            return Math.floor(Math.pow(level, 1.5) * state.config.xpMultiplier);
+        }
+
+        // 고유 댓글 작성자 카운트 계산용 함수 (도배 방지)
+        function getDistinctCommentatorCount(post) {
+            if (!post.comments || post.comments.length === 0) return 0;
+            const uniqueNicks = post.comments.map(c => {
+                return c.author.split(' (')[0].trim();
+            });
+            return new Set(uniqueNicks).size;
+        }
+
+        // 실시간 인기 하이라이트 배너 생성 스크립트 (최고추천 / 최고조회 / 다중댓글 자동 연동 패치)
+        function renderHighlightsSlider() {
+            const wrapper = document.getElementById('slider-wrapper');
+            if (!wrapper) return;
+
+            // 1. 공식 지정 공지 우선 추출
+            const notices = state.posts.filter(p => p.forumId === 999 && p.showInHighlight);
+
+            // 2. 일반 게시글만 추출 (NOTICE 999 제외)
+            const generalPosts = state.posts.filter(p => p.forumId !== 999);
+
+            const highlightItems = [];
+
+            // A. [최고 추천] 슬롯 엄선
+            if (generalPosts.length > 0) {
+                const sortedByLikes = [...generalPosts].sort((a, b) => (b.likes || 0) - (a.likes || 0));
+                const topLiked = sortedByLikes[0];
+                if (topLiked) {
+                    highlightItems.push({
+                        ...topLiked,
+                        highlightType: "LIKES",
+                        badgeLabel: "⭐ 실시간 최고 추천",
+                        statValue: `추천수: ${topLiked.likes}회`
+                    });
+                }
+            }
+
+            // B. [최고 조회] 슬롯 엄선 (추천 슬롯과 안 겹치는 타겟 우선 배정 구조)
+            if (generalPosts.length > 0) {
+                const sortedByViews = [...generalPosts].sort((a, b) => (b.views || 0) - (a.views || 0));
+                let topViewed = sortedByViews.find(p => p.id !== (highlightItems[0]?.id || null));
+                if (!topViewed) topViewed = sortedByViews[0]; // 겹칠 시 차선책이 없으면 그대로 배정
+
+                if (topViewed) {
+                    highlightItems.push({
+                        ...topViewed,
+                        highlightType: "VIEWS",
+                        badgeLabel: "👁️ 실시간 최다 조회",
+                        statValue: `조회수: ${topViewed.views || 0}회`
+                    });
+                }
+            }
+
+            // C. [다중 참여 최고 댓글] 슬롯 엄선 (최소 2인 고유 작성자 제한 가드 작동)
+            if (generalPosts.length > 0) {
+                // 고유 댓글 작성자 2인 이상 통과 게시글만 거름
+                const qualifiedCommentPosts = generalPosts.filter(p => getDistinctCommentatorCount(p) >= 2);
+                
+                if (qualifiedCommentPosts.length > 0) {
+                    const sortedByComments = [...qualifiedCommentPosts].sort((a, b) => b.comments.length - a.comments.length);
+                    // 앞의 슬롯들과 가급적 안 겹치는 것 선택
+                    const matchedIds = highlightItems.map(h => h.id);
+                    let topCommented = sortedByComments.find(p => !matchedIds.includes(p.id));
+                    if (!topCommented) topCommented = sortedByComments[0];
+
+                    if (topCommented) {
+                        highlightItems.push({
+                            ...topCommented,
+                            highlightType: "MULTI_COMMENTS",
+                            badgeLabel: `💬 실시간 다중 참여 소통 (${getDistinctCommentatorCount(topCommented)}인 참여)`,
+                            statValue: `댓글수: ${topCommented.comments.length}개`
+                        });
+                    }
+                } else {
+                    // 조건 만족 포스트가 없는 경우: 경고성 더미 카드 자동 배치로 참여 독려!
+                    highlightItems.push({
+                        id: 99999,
+                        title: "⚔️ 다중 참여 최고 댓글글 조건 미달 안내",
+                        content: "현재 최소 2명 이상의 모험가들이 댓글로 소통한 게시글이 없습니다. 2명 이상 모여 소통을 완료하면 이 인기 배너 슬롯이 활성화됩니다!",
+                        author: "에테리아보안처",
+                        forumId: 1,
+                        likes: 0,
+                        views: 0,
+                        highlightType: "WARNING",
+                        badgeLabel: "⚠️ 완장 보안 경고: 다중 참여 소통글 미달",
+                        statValue: "소통 인원 부족"
+                    });
+                }
+            }
+
+            // 공식 공지사항 슬라이드와 결합
+            const finalSlides = [...notices.map(n => ({...n, badgeLabel: "📢 에테리아 공식 공지", statValue: "공식 칙령"})), ...highlightItems];
+
+            if (finalSlides.length === 0) {
+                finalSlides.push({
+                    title: "에테리아 포털에 오신 것을 환영합니다!",
+                    content: "등록된 모험담이나 공지사항이 아직 존재하지 않습니다. 첫 게시글과 추천의 역사를 시작해보세요.",
+                    author: "에테리아코어",
+                    likes: 0,
+                    views: 0,
+                    badgeLabel: "안내",
+                    statValue: "에테리아 운영"
+                });
+            }
+
+            state.totalSlides = finalSlides.length;
+
+            wrapper.innerHTML = finalSlides.map((item, idx) => {
+                const isNotice = item.forumId === 999;
+                const isWarning = item.highlightType === "WARNING";
+                
+                let badgeColor = "bg-amber-500/20 text-amber-400 border border-amber-500/20";
+                let iconClass = "fa-fire text-amber-500 animate-pulse";
+                
+                if (isNotice) {
+                    badgeColor = "bg-red-500/20 text-red-400 border border-red-500/20";
+                    iconClass = "fa-bullhorn text-red-500 animate-bounce";
+                } else if (isWarning) {
+                    badgeColor = "bg-rose-950 text-rose-400 border border-rose-800/40";
+                    iconClass = "fa-triangle-exclamation text-rose-500 animate-bounce";
+                } else if (item.highlightType === "VIEWS") {
+                    badgeColor = "bg-emerald-500/20 text-emerald-400 border border-emerald-500/20";
+                    iconClass = "fa-eye text-emerald-400 animate-pulse";
+                } else if (item.highlightType === "MULTI_COMMENTS") {
+                    badgeColor = "bg-sky-500/20 text-sky-400 border border-sky-500/20";
+                    iconClass = "fa-comments text-sky-400 animate-bounce";
+                }
+
+                return `
+                    <div class="min-w-full p-6 flex flex-col md:flex-row items-center gap-6 justify-between shrink-0 select-none">
+                        <div class="flex-1 space-y-3">
+                            <div class="flex items-center gap-2">
+                                <span class="${badgeColor} text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider">${item.badgeLabel}</span>
+                                <span class="bg-slate-950 text-amber-500 font-mono text-[9px] px-2 py-0.5 rounded border border-slate-800">${item.statValue}</span>
+                            </div>
+                            <h3 class="text-xl md:text-2xl font-bold text-white tracking-tight leading-snug">${item.title}</h3>
+                            <p class="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-md line-clamp-2">${item.content}</p>
+                            <div class="flex items-center gap-3">
+                                ${!isWarning ? `
+                                    <button onclick="viewSpecificForum(${item.forumId || 1})" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2 rounded-lg shadow-md transition-all">
+                                        해당 게시판 보러 가기
+                                    </button>
+                                ` : ''}
+                                ${(!isNotice && !isWarning) ? `
+                                    <span class="text-xs text-amber-500 font-bold">
+                                        <i class="fa-solid fa-thumbs-up mr-1"></i> 추천수 ${item.likes || 0}
+                                        <span class="text-slate-500 mx-1.5">|</span>
+                                        <i class="fa-solid fa-eye mr-1"></i> 조회수 ${item.views || 0}
+                                    </span>
+                                ` : ''}
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/3 h-32 md:h-44 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center overflow-hidden">
+                            <i class="fa-solid ${iconClass} text-5xl"></i>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            if (state.currentSlide >= state.totalSlides) {
+                state.currentSlide = 0;
+            }
+            document.getElementById('slider-page-indicator').innerText = `${state.currentSlide + 1} / ${state.totalSlides}`;
+            updateSlider();
+        }
+
+        // 슬라이더 조작 컨트롤러 복원
+        function updateSlider() {
+            const wrapper = document.getElementById('slider-wrapper');
+            if (wrapper) {
+                wrapper.style.transform = `translateX(${state.currentSlide * -100}%)`;
+            }
+            const indicator = document.getElementById('slider-page-indicator');
+            if (indicator) {
+                indicator.innerText = `${state.currentSlide + 1} / ${state.totalSlides}`;
+            }
+        }
+        function slideNext() { if (state.totalSlides > 0) { state.currentSlide = (state.currentSlide + 1) % state.totalSlides; updateSlider(); } }
+        function slidePrev() { if (state.totalSlides > 0) { state.currentSlide = (state.currentSlide - 1 + state.totalSlides) % state.totalSlides; updateSlider(); } }
+
+        function appointForumDeputy() {
+            if (!state.user || !state.activeForumId) return;
+            const targetId = document.getElementById('forum-deputy-target-user').value;
+            if (!targetId) {
+                toast('지정할 모험가를 선택해 주십시오.', 'error');
+                return;
+            }
+
+            const targetUser = state.users.find(u => u.username === targetId);
+            if (!targetUser) return;
+
+            targetUser.role = 'forum_deputy';
+            targetUser.managedForumId = state.activeForumId;
+
+            toast(`⚔️ 명령 접수: [${targetUser.nickname}] 모험가를 본 게시판 부관리자로 진급 위임했습니다!`, 'system');
+            openForumControlPanel();
+        }
+
+        function openForumControlPanel() {
+            if (!state.activeForumId) return;
+            const forum = state.communities.find(c => c.id === state.activeForumId);
+            if (!forum) return;
+
+            document.getElementById('forum-admin-active-name').innerText = forum.name;
+            document.getElementById('local-admin-display').innerText = forum.manager;
+
+            const localDeputies = state.users.filter(u => u.role === 'forum_deputy' && u.managedForumId === state.activeForumId);
+            const deputyTxt = localDeputies.length > 0 ? localDeputies.map(u => `${u.nickname}(${u.username})`).join(', ') : '지정된 부관리자 없음';
+            document.getElementById('local-deputy-list-display').innerText = deputyTxt;
+
+            const targetSelect = document.getElementById('forum-deputy-target-user');
+            if (targetSelect) {
+                const candidateUsers = state.users.filter(u => u.role === 'user');
+                targetSelect.innerHTML = `<option value="">지정할 모험가 선택</option>` + candidateUsers.map(u => `<option value="${u.username}">${u.nickname}</option>`).join('');
+            }
+
+            changeView('forum-admin-control');
+        }
+
+        function backToForumDetail() {
+            if (state.activeForumId) {
+                viewSpecificForum(state.activeForumId);
+            } else {
+                changeView('home');
+            }
+        }
+
+        // 창 시작 즉시 연동 및 기동 시스템 선포
+        window.onload = function() {
+            // 최고관리자 수치 기입 복구
+            document.getElementById('config-max-level').value = state.config.maxLevel;
+            document.getElementById('config-xp-multiplier').value = state.config.xpMultiplier;
+            
+            // 실시간 초기 빌드 그리기 지시
+            renderCommunityCards();
+            renderHighlightsSlider();
+            renderAdBanners();
+            renderUserSanctionsTable();
+            renderAdminProposals();
+            renderStaffMemos();
+            populateUserDropdowns();
+            loadAdSlotSettings();
+            renderCountryBlocks();
+            renderVPNAlertsList();
+            
+            // 헤더 & 모험가 프로필 상태 동기화
+            updateHeaderAndProfileUI();
+
+            // 오토플레이 슬라이더 구동 (8초 간격 순회)
+            setInterval(() => { slideNext(); }, 8000);
         }
     </script>
 </body>
